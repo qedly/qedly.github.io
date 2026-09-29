@@ -21,6 +21,9 @@ export function rewriteLink(href: string, fromPath: string, repo: string, tag: s
   return `https://github.com/${repo}/${isFolder ? "tree" : "blob"}/${tag}/${resolved.replace(/\/$/, "")}${trailing}${hash}`;
 }
 
+/** The reader's path through the docs; pages not listed follow, alphabetically. */
+const SIDEBAR_ORDER = ["quickstart", "concepts", "project-configuration", "security", "costs", "cli", "troubleshooting", "mcp-install", "openrouter", "architecture-production", "releases"];
+
 /** Turn one AgentX docs file into a Starlight page: H1 into frontmatter, release stamp, links rewritten outside code blocks. */
 export function toStarlightPage(markdown: string, sourcePath: string, repo: string, tag: string): { slug: string; content: string } {
   const match = /^# (.+)\n+/.exec(markdown);
@@ -30,6 +33,8 @@ export function toStarlightPage(markdown: string, sourcePath: string, repo: stri
     .map((part) => part.startsWith("```") ? part : part.replace(/\]\(([^)\s]+)\)/g, (_all, href: string) => `](${rewriteLink(href, sourcePath, repo, tag)})`))
     .join("");
   const title = match[1].trim();
-  const content = `---\ntitle: ${JSON.stringify(title)}\ndescription: ${JSON.stringify(`AgentX ${tag} documentation`)}\n---\n\n> Documents AgentX ${tag}.\n\n${body}`;
-  return { slug: slugFor(sourcePath), content };
+  const slug = slugFor(sourcePath);
+  const order = SIDEBAR_ORDER.includes(slug) ? SIDEBAR_ORDER.indexOf(slug) + 1 : 100;
+  const content = `---\ntitle: ${JSON.stringify(title)}\ndescription: ${JSON.stringify(`AgentX ${tag} documentation`)}\nsidebar:\n  order: ${order}\n---\n\n> Documents AgentX ${tag}.\n\n${body}`;
+  return { slug, content };
 }

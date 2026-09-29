@@ -30,7 +30,7 @@ describe("toStarlightPage", () => {
   it("moves the H1 into frontmatter, stamps the release and rewrites links", () => {
     const page = toStarlightPage("# Project configuration\n\nSee [Linear](connectors/linear.md).\n", "docs/project-configuration.md", repo, tag);
     expect(page.slug).toBe("project-configuration");
-    expect(page.content).toBe('---\ntitle: "Project configuration"\ndescription: "AgentX v0.1.0 documentation"\n---\n\n> Documents AgentX v0.1.0.\n\nSee [Linear](/docs/agentx/connectors/linear/).\n');
+    expect(page.content).toBe('---\ntitle: "Project configuration"\ndescription: "AgentX v0.1.0 documentation"\nsidebar:\n  order: 3\n---\n\n> Documents AgentX v0.1.0.\n\nSee [Linear](/docs/agentx/connectors/linear/).\n');
   });
   it("quotes titles that contain a colon", () => {
     expect(toStarlightPage("# Setup: the short way\n\nx\n", "docs/a.md", repo, tag).content).toContain('title: "Setup: the short way"');
@@ -47,5 +47,14 @@ describe("toStarlightPage", () => {
 describe("slugFor", () => {
   it("keeps sub-folders", () => {
     expect(slugFor("docs/connectors/asana.md")).toBe("connectors/asana");
+  });
+});
+
+describe("sidebar order", () => {
+  it("puts the reader's path first and leaves unlisted pages after it", () => {
+    const quickstart = toStarlightPage("# Quickstart\n\nx\n", "docs/quickstart.md", "o/r", "v1").content;
+    const other = toStarlightPage("# Zeta\n\nx\n", "docs/zeta.md", "o/r", "v1").content;
+    expect(quickstart).toContain("sidebar:\n  order: 1\n");
+    expect(other).toContain("sidebar:\n  order: 100\n");
   });
 });
