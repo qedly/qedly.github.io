@@ -5,7 +5,10 @@
       "url": [
         "/index.html",
         "/docs/agentx/releases/index.html"
-      ]
+      ],
+      "settings": {
+        "chromeFlags": "--headless=new --no-sandbox --disable-gpu --disable-dev-shm-usage"
+      }
     },
     "assert": {
       "assertions": {

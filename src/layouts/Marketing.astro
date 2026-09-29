@@ -1,6 +1,7 @@
 ---
 /** The shared shell for every marketing page: meta tags, the build banner, header, footer. */
 import "../styles/tokens.css";
+import FontPreload from "../components/brand/FontPreload.astro";
 import { SITE, absoluteUrl } from "../config/site";
 import Button from "../components/brand/Button.astro";
 
@@ -23,6 +24,7 @@ const nav = [
   <title>{title}</title>
   <meta name="description" content={description} />
   <meta name="robots" content={SITE.launched ? "index,follow" : "noindex,nofollow"} />
+  <FontPreload />
   <link rel="canonical" href={canonical} />
   <link rel="icon" href="/brand/favicon.svg" type="image/svg+xml" />
   <meta property="og:title" content={title} />

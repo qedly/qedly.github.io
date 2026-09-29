@@ -7,7 +7,8 @@
         "/docs/agentx/releases/index.html"
       ],
       "settings": {
-        "preset": "desktop"
+        "preset": "desktop",
+        "chromeFlags": "--headless=new --no-sandbox --disable-gpu --disable-dev-shm-usage"
       }
     },
     "assert": {
