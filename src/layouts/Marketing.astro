@@ -1,0 +1,84 @@
+---
+/** The shared shell for every marketing page: meta tags, the build banner, header, footer. */
+import "../styles/tokens.css";
+import { SITE, absoluteUrl } from "../config/site";
+import Button from "../components/brand/Button.astro";
+
+interface Props { title: string; description: string; path: string; jsonLd?: object }
+const { title, description, path, jsonLd } = Astro.props;
+const canonical = absoluteUrl(path);
+const nav = [
+  { href: "/code/", label: "QEDly Code" },
+  { href: "/code/#how", label: "How it proves" },
+  { href: "/security/", label: "Security" },
+  { href: "/receipts/", label: "Receipts" },
+  { href: "/docs/", label: "Docs" },
+];
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta name="robots" content={SITE.launched ? "index,follow" : "noindex,nofollow"} />
+  <link rel="canonical" href={canonical} />
+  <link rel="icon" href="/brand/favicon.svg" type="image/svg+xml" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content={absoluteUrl("/brand/og-template.svg")} />
+  <meta name="twitter:card" content="summary_large_image" />
+  {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+</head>
+<body class="q-paper-grid">
+  <a class="q-skip" href="#main">Skip to content</a>
+  <div class="q-banner">
+    <span>This site is built by QEDly Code. Every change comes with a receipt.</span>
+    <a href="/receipts/">See the receipts</a>
+  </div>
+  <header class="q-header">
+    <div class="q-header-left">
+      <a href="/" aria-label={`${SITE.name} home`}><img class="q-logo" src="/brand/wordmark.svg" alt={SITE.name} /></a>
+      <nav aria-label="Main">
+        {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+      </nav>
+    </div>
+    <div class="q-header-right">
+      <a class="q-github" href={`https://github.com/${SITE.agentxRepo}`}>GitHub</a>
+      <Button href="/docs/agentx/quickstart/">Deploy QEDly Code</Button>
+    </div>
+  </header>
+  <main id="main"><slot /></main>
+  <footer class="q-footer">
+    <img class="q-logo q-logo-small" src="/brand/wordmark.svg" alt={SITE.name} />
+    <p class="q-mono">{SITE.licence} · Said Q-E-D-lee · {SITE.tagline}</p>
+  </footer>
+</body>
+</html>
+<style is:global>
+  html { color-scheme: light; }
+  body { margin: 0; color: var(--q-ink); font-family: var(--q-font-body); font-size: 1.125rem; line-height: 1.55; }
+  a { color: var(--q-ink); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+  a:hover { color: var(--q-green); }
+  a:focus-visible { outline: 3px solid var(--q-blue); outline-offset: 3px; }
+  img { max-width: 100%; height: auto; }
+</style>
+<style>
+  .q-logo { display: block; height: 32px; width: auto; max-width: none; }
+  .q-logo-small { height: 28px; }
+  .q-skip { position: absolute; left: -999px; top: 0; background: var(--q-yellow); padding: 8px 12px; z-index: 10; }
+  .q-skip:focus { left: 8px; }
+  .q-banner { background: var(--q-ink); color: var(--q-paper); display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px 16px; padding: 10px var(--q-gutter); font-size: 0.9375rem; text-align: center; }
+  .q-banner a { color: var(--q-ink); background: var(--q-yellow); text-decoration: none; padding: 4px 12px; font-weight: 600; font-size: 0.875rem; }
+  .q-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 18px var(--q-gutter); background: var(--q-paper); border-bottom: var(--q-border); }
+  .q-header-left, .q-header-right { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 40px; }
+  .q-header-right { gap: 14px; }
+  nav { display: flex; flex-wrap: wrap; gap: 8px 26px; font-size: 1rem; font-weight: 500; }
+  nav a, .q-github { text-decoration: none; }
+  .q-github { border: var(--q-border); padding: 8px 14px; font-weight: 600; font-size: 0.9375rem; min-height: 44px; box-sizing: border-box; display: inline-flex; align-items: center; }
+  .q-footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; padding: 40px var(--q-gutter); background: var(--q-paper); border-top: var(--q-border); }
+  .q-footer p { margin: 0; font-size: 0.8125rem; color: var(--q-ink-muted); }
+</style>

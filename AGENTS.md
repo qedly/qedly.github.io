@@ -17,6 +17,13 @@ This repository is the QEDly website and docs: `https://qedly.github.io`, built 
 - Planned products carry a status label: Now, Next or Later.
 - Plain words, active voice, short sentences.
 
+## Rules for design
+
+- The look is "the proof": ink on graph paper, with green marker for proved, red pen for wrong, yellow highlighter and blue ballpoint notes. Tokens live in `src/styles/tokens.css`.
+- Build pages from `src/components/brand/` (Strike, MarkerBox, Highlight, HandNote, Eyebrow, Button, ProofTable) inside `src/layouts/Marketing.astro`. `/styleguide/` shows each one in use; copy from it instead of adding new styles.
+- Green is only for something proved. Never colour a claim, a button or a decoration green.
+- Every animation must look finished at rest: a thumbnail or a reader with reduced motion sees the complete page.
+
 ## Rules for code
 
 - Site-wide values (URL, licence, docs tag, repositories) live only in `src/config/site.ts`.

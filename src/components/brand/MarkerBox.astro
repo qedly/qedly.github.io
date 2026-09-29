@@ -1,0 +1,13 @@
+---
+/** Green marker box drawn around an answer that has been proved. Green means proved, so use it for nothing else. */
+interface Props { delay?: string }
+const { delay = "-4.2s" } = Astro.props;
+---
+<span class="q-box">
+  <span class="q-box-text"><slot /></span>
+  <svg viewBox="0 0 300 120" preserveAspectRatio="none" aria-hidden="true"><path class="q-draw" style={`animation-delay: ${delay}`} d="M10 16 C 90 6, 210 4, 292 12 C 297 46, 295 82, 289 110 C 200 117, 100 118, 12 111 C 5 80, 4 46, 10 16 Z" fill="none" stroke="var(--q-green)" stroke-width="7" stroke-linejoin="round" /></svg>
+</span>
+<style>
+  .q-box { position: relative; display: inline-block; padding: 0 0.16em; color: var(--q-green); }
+  svg { position: absolute; inset: -0.14em -0.07em -0.18em -0.07em; width: calc(100% + 0.14em); height: calc(100% + 0.32em); overflow: visible; pointer-events: none; }
+</style>

@@ -1,0 +1,14 @@
+---
+/** A call to action. It is always a real link, so keyboard, screen reader and middle-click all work. */
+interface Props { href: string; variant?: "primary" | "outline" | "light" }
+const { href, variant = "primary" } = Astro.props;
+---
+<a class={`q-button q-button-${variant}`} href={href}><slot /></a>
+<style>
+  .q-button { display: inline-flex; align-items: center; min-height: 44px; padding: 0 1.4em; font-family: var(--q-font-body); font-weight: 700; font-size: 1.125rem; text-decoration: none; border: var(--q-border); }
+  .q-button-primary { background: var(--q-ink); color: var(--q-paper); }
+  .q-button-outline { background: transparent; color: var(--q-ink); }
+  .q-button-light { background: var(--q-paper); color: var(--q-ink); border-color: var(--q-paper); }
+  .q-button:hover { box-shadow: 4px 4px 0 var(--q-green); }
+  .q-button:focus-visible { outline: 3px solid var(--q-blue); outline-offset: 3px; }
+</style>

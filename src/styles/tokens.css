@@ -1,0 +1,86 @@
+/*
+ * QEDly design tokens: "the proof". The page is a proof being marked.
+ * Ink on graph paper. Green marker means proved, and nothing else.
+ * Red pen marks what is wrong. Yellow highlighter marks what matters.
+ * Blue ballpoint writes the margin notes.
+ */
+@import "@fontsource-variable/schibsted-grotesk";
+@import "@fontsource-variable/instrument-sans";
+@import "@fontsource-variable/jetbrains-mono";
+@import "@fontsource/caveat/700.css";
+
+:root {
+  --q-ink: #0F1216;
+  --q-ink-soft: #2A313B;
+  --q-ink-muted: #4A525E;
+  --q-ink-faint: #6B7380;
+  --q-paper: #FFFFFF;
+  --q-grid: #EAF0F8;
+  --q-rule: #C9D2DE;
+  --q-green: #00A870;      /* proved, and only proved */
+  --q-red: #E5383B;        /* red pen: wrong, struck out */
+  --q-yellow: #FFE45C;     /* highlighter */
+  --q-blue: #2F5BD3;       /* ballpoint margin notes */
+  --q-amber: #B26B00;      /* the "Later" label only */
+  --q-night: #0F1216;
+  --q-night-text: #C9D1DB;
+
+  --q-font-display: "Schibsted Grotesk Variable", "Helvetica Neue", Arial, sans-serif;
+  --q-font-body: "Instrument Sans Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --q-font-mono: "JetBrains Mono Variable", ui-monospace, "SF Mono", Menlo, monospace;
+  --q-font-hand: "Caveat", "Comic Sans MS", cursive;
+
+  --q-border: 2px solid var(--q-ink);
+  --q-shadow: 10px 10px 0 var(--q-ink);
+  --q-gutter: clamp(16px, 6.6vw, 96px);
+  --q-measure: 66ch;
+}
+
+.q-paper-grid {
+  background-color: var(--q-paper);
+  background-image:
+    linear-gradient(var(--q-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--q-grid) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.q-display { font-family: var(--q-font-display); font-weight: 900; letter-spacing: -0.045em; line-height: 0.98; text-wrap: balance; }
+.q-mono { font-family: var(--q-font-mono); }
+.q-hand { font-family: var(--q-font-hand); font-weight: 700; }
+
+/* Pen colours: the only four a mark may use. */
+.q-pen-red { color: var(--q-red); }
+.q-pen-blue { color: var(--q-blue); }
+.q-pen-green { color: var(--q-green); }
+.q-pen-yellow { color: var(--q-yellow); }
+
+/* Eyebrow tones */
+.q-tone-ink { color: var(--q-ink); }
+.q-tone-green { color: var(--q-green); }
+.q-tone-red { color: var(--q-red); }
+.q-tone-blue { color: var(--q-blue); }
+.q-tone-yellow { color: var(--q-yellow); }
+
+/*
+ * Marks draw themselves, then hold. Negative delays mean the page is complete the moment it loads:
+ * a thumbnail, a link preview or a reader with motion turned off sees every mark already drawn.
+ */
+.q-draw { stroke-dasharray: 1000; stroke-dashoffset: 0; animation: q-draw 7s ease-in-out infinite; animation-delay: -5s; }
+@keyframes q-draw { 0% { stroke-dashoffset: 1000; } 30%, 100% { stroke-dashoffset: 0; } }
+
+mark.q-hl {
+  color: inherit;
+  padding: 0 4px;
+  background: linear-gradient(transparent 58%, var(--q-yellow) 58%, var(--q-yellow) 92%, transparent 92%) no-repeat;
+  background-size: 100% 100%;
+  animation: q-hl 7s ease-out infinite;
+  animation-delay: -4.5s;
+}
+@keyframes q-hl { 0% { background-size: 0% 100%; } 25%, 100% { background-size: 100% 100%; } }
+
+.q-row { animation: q-row 12s ease-out infinite; }
+@keyframes q-row { 0% { opacity: 0; transform: translateY(6px); } 6%, 92% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .q-draw, mark.q-hl, .q-row { animation: none; }
+}

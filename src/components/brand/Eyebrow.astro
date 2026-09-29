@@ -1,0 +1,9 @@
+---
+/** The small monospace label above a section heading, such as "STEP 2 · PROVE". */
+interface Props { tone?: "ink" | "green" | "red" | "blue" | "yellow" }
+const { tone = "ink" } = Astro.props;
+---
+<p class={`q-mono q-eyebrow q-tone-${tone}`}><slot /></p>
+<style>
+  .q-eyebrow { margin: 0; font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+</style>

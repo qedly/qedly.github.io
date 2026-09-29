@@ -1,0 +1,81 @@
+---
+/**
+ * The living style guide: every brand component, used the way pages should use it.
+ * Page tasks copy from here instead of inventing new styles. Not linked from the navigation.
+ */
+import Marketing from "../layouts/Marketing.astro";
+import Strike from "../components/brand/Strike.astro";
+import MarkerBox from "../components/brand/MarkerBox.astro";
+import Highlight from "../components/brand/Highlight.astro";
+import HandNote from "../components/brand/HandNote.astro";
+import Eyebrow from "../components/brand/Eyebrow.astro";
+import Button from "../components/brand/Button.astro";
+import ProofTable from "../components/brand/ProofTable.astro";
+
+const swatches = [
+  ["--q-ink", "Ink", "Text, borders, primary buttons"],
+  ["--q-green", "Marker green", "Proved. Nothing else is green."],
+  ["--q-red", "Red pen", "Wrong, refused, struck out"],
+  ["--q-yellow", "Highlighter", "The few words that matter"],
+  ["--q-blue", "Ballpoint", "Margin notes that explain"],
+];
+---
+<Marketing title="QEDly style guide" description="How QEDly pages look, and why." path="/styleguide/">
+  <section class="sg">
+    <Eyebrow>Style guide</Eyebrow>
+    <h1 class="q-display sg-h1">The page is a proof <MarkerBox>being marked.</MarkerBox></h1>
+    <p class="sg-lede">Ink on graph paper. Green marker means proved, and nothing else. Red pen marks what is wrong. Yellow highlighter marks <Highlight>the words that matter</Highlight>. Blue ballpoint writes the margin notes.</p>
+
+    <h2 class="q-display sg-h2">Colours</h2>
+    <ul class="sg-swatches">
+      {swatches.map(([token, name, use]) => (
+        <li><span class="sg-chip" style={`background: var(${token})`} /><strong>{name}</strong><span class="q-mono">{token}</span><span>{use}</span></li>
+      ))}
+    </ul>
+
+    <h2 class="q-display sg-h2">Type</h2>
+    <p class="q-display sg-type">Schibsted Grotesk 900 for headlines.</p>
+    <p>Instrument Sans for reading, set near 66 characters a line.</p>
+    <p class="q-mono">JetBrains Mono for evidence: commit 4e60f7b, 18 / 18.</p>
+    <p><HandNote pen="blue">Caveat for margin notes, a few words at a time.</HandNote></p>
+
+    <h2 class="q-display sg-h2">Marks</h2>
+    <p class="q-display sg-type">Other agents say <Strike>done.</Strike> QEDly Code says <MarkerBox>QED.</MarkerBox></p>
+    <p>Strike is for claims we refuse. MarkerBox is for an answer that was proved. Highlight is for one phrase a section. HandNote pens: <HandNote pen="red">red confirms a check</HandNote>, <HandNote pen="blue">blue explains</HandNote>.</p>
+
+    <h2 class="q-display sg-h2">Labels and actions</h2>
+    <div class="sg-row"><Eyebrow tone="blue">Step 1 · Ask</Eyebrow><Eyebrow tone="green">Step 2 · Prove</Eyebrow><Eyebrow tone="red">Counterexamples we refuse</Eyebrow></div>
+    <div class="sg-row"><Button href="/docs/">Deploy QEDly Code</Button><Button href="/receipts/" variant="outline">See the receipts</Button></div>
+
+    <h2 class="q-display sg-h2">The proof</h2>
+    <div class="sg-proof">
+      <ProofTable
+        title="Proof · #demo-app thread"
+        given='Priya asks, "Add a Notes page to the demo app: API, UI and tests."'
+        toProve="the change works and is ready for a person to merge."
+        rows={[
+          { statement: "The work runs on its own machine.", reason: "This thread's workspace, in your AWS" },
+          { statement: "The code is written.", reason: "commit 4e60f7b · 13 files", monoReason: true },
+          { statement: "Unit tests pass.", reason: "Your CodeBuild, on 4e60f7b", passed: true },
+          { statement: "Integration tests pass.", reason: "Your CodeBuild, on 4e60f7b", passed: true },
+          { statement: "The agent did not mark its own work.", reason: "It holds no CodeBuild keys" },
+          { statement: "A person decides.", reason: "Pull request opened for Priya" },
+        ]}
+        conclusion="The change works."
+      />
+    </div>
+  </section>
+</Marketing>
+<style>
+  .sg { padding: 64px var(--q-gutter) 96px; display: grid; gap: 24px; max-width: 1100px; }
+  .sg-h1 { margin: 0; font-size: clamp(2.6rem, 7vw, 5.5rem); }
+  .sg-h2 { margin: 32px 0 0; font-size: clamp(1.8rem, 4vw, 2.6rem); }
+  .sg-type { margin: 0; font-size: clamp(1.6rem, 4vw, 2.6rem); }
+  .sg-lede { margin: 0; max-width: var(--q-measure); font-size: 1.3rem; }
+  .sg-swatches { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+  .sg-swatches li { display: grid; grid-template-columns: 48px 160px 160px 1fr; gap: 16px; align-items: center; }
+  .sg-chip { width: 48px; height: 32px; border: var(--q-border); }
+  .sg-row { display: flex; flex-wrap: wrap; gap: 16px 28px; align-items: center; }
+  .sg-proof { max-width: 640px; }
+  @media (max-width: 640px) { .sg-swatches li { grid-template-columns: 48px 1fr; } }
+</style>
