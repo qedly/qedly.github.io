@@ -16,6 +16,7 @@ export default defineConfig({
       },
       favicon: "/brand/favicon.svg",
       customCss: ["./src/styles/starlight.css"],
+      components: { Head: "./src/components/docs/Head.astro" },
       social: [{ icon: "github", label: "GitHub", href: `https://github.com/${SITE.siteRepo}` }],
       head: [
         { tag: "meta", attrs: { property: "og:image", content: `${SITE.url}/brand/og.png` } },
