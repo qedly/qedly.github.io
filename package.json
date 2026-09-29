@@ -10,7 +10,8 @@
     "check": "astro check",
     "astro": "astro",
     "check:claims": "tsx scripts/check-claims.ts",
-    "sync:docs": "tsx scripts/sync-docs.ts"
+    "sync:docs": "tsx scripts/sync-docs.ts",
+    "fetch:receipts": "tsx scripts/fetch-receipts.ts"
   },
   "dependencies": {
     "@astrojs/starlight": "^0.42.4",

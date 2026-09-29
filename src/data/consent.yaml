@@ -1,0 +1,3 @@
+# Slack user ID -> the display name that person agreed to show on receipts.
+# Add someone only after they agree in writing. Anyone not listed shows as "a QEDly team member".
+{}
