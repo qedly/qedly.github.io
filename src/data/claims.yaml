@@ -1,0 +1,170 @@
+# The claims ledger (spec 042 Appendix B). Every fact the site states about what QEDly Code does today
+# is here with its evidence, and pages render it with <Claim id="…" />. Evidence was checked against
+# PrepLabsAI/AgentX mainline on 2026-09-29. "next" and "later" claims appear only with a status label.
+
+- id: ask-in-slack
+  text: Ask in Slack. No developer machine has to stay online.
+  status: now
+  evidence:
+    - { kind: pr, repo: PrepLabsAI/AgentX, number: 16 }
+    - { kind: file, repo: PrepLabsAI/AgentX, path: README.md }
+
+- id: thread-machine
+  text: Every thread gets its own isolated, persistent machine in your AWS account.
+  status: now
+  evidence:
+    - { kind: pr, repo: PrepLabsAI/AgentX, number: 134 }
+    - { kind: file, repo: PrepLabsAI/AgentX, path: docs/architecture-production.md }
+
+- id: machine-ready-time
+  text: A fresh machine is ready in about two minutes, and an idle one resumes in about the same.
+  status: now
+  evidence:
+    - { kind: pr, repo: PrepLabsAI/AgentX, number: 105 }
+    - { kind: pr, repo: PrepLabsAI/AgentX, number: 94 }
+
+- id: idle-stop
+  text: Idle machines stop after five minutes. The files and the conversation stay.
+  status: now
+  evidence:
+    - { kind: pr, repo: PrepLabsAI/AgentX, number: 95 }
+    - { kind: pr, repo: PrepLabsAI/AgentX, number: 105 }
+
+- id: thread-memory
+  text: Follow-ups in the thread see the earlier discussion and the earlier edits.
+  status: now
+  evidence:
+    - { kind: pr, repo: PrepLabsAI/AgentX, number: 30 }
+    - { kind: file, repo: PrepLabsAI/AgentX, path: README.md }
+
+- id: orchestrator-no-code
+  text: The part that talks to you cannot read, edit or run your code. Only an isolated worker can.
+  status: now
+  evidence:
+    - { kind: file, repo: PrepLabsAI/AgentX, path: packages/orchestrator/src/orchestrator.ts }
+    - { kind: file, repo: PrepLabsAI/AgentX, path: .specify/memory/constitution.md }
+
+- id: exact-commit-gates
+  text: Checks run in your CodeBuild on the exact commit, and the agent holds no CodeBuild credentials.
+  status: now
+  evidence:
+    - { kind: file, repo: PrepLabsAI/AgentX, path: packages/broker/src/codebuild.ts }
+    - { kind: file, repo: PrepLabsAI/AgentX, path: specs/004-codebuild-gates/spec.md }
+
+- id: no-pr-until-gates
+  text: No pull request is created or moved until every check you configured passes.
+  status: now
+  evidence:
+    - { kind: file, repo: PrepLabsAI/AgentX, path: packages/broker/src/aws/broker.ts }
+    - { kind: file, repo: PrepLabsAI/AgentX, path: specs/004-codebuild-gates/spec.md }
+
+- id: per-operation-tokens
+  text: GitHub tokens are issued for each operation and limited to one repository.
+  status: now
+  evidence:
+    - { kind: file, repo: PrepLabsAI/AgentX, path: packages/broker/src/github-app.ts }
+    - { kind: file, repo: PrepLabsAI/AgentX, path: README.md }
+
+- id: no-force-no-merge
+  text: It never force-pushes and never merges. A person does.
+  status: now
+  evidence:
+    - { kind: file, repo: PrepLabsAI/AgentX, path: README.md }
+
+- id: tickets-cant-approve
+  text: Text inside an issue can't approve an action, and destructive actions always ask first.
+  status: now
+  evidence:
+    - { kind: pr, repo: PrepLabsAI/AgentX, number: 56 }
+    - { kind: pr, repo: PrepLabsAI/AgentX, number: 63 }
+    - { kind: pr, repo: PrepLabsAI/AgentX, number: 64 }
+
+- id: cost-per-task
+  text: Every coding task records its tokens and estimated cost.
+  status: now
+  evidence:
+    - { kind: pr, repo: PrepLabsAI/AgentX, number: 28 }
+    - { kind: file, repo: PrepLabsAI/AgentX, path: packages/contracts/src/usage.ts }
+
+- id: audit-view
+  text: Every reply that used a tool has an audit view.
+  status: now
+  evidence:
+    - { kind: pr, repo: PrepLabsAI/AgentX, number: 44 }
+    - { kind: pr, repo: PrepLabsAI/AgentX, number: 65 }
+
+- id: stop-task
+  text: Anyone in the channel can stop a running task.
+  status: now
+  note: Merged; verify live before launch.
+  evidence:
+    - { kind: pr, repo: PrepLabsAI/AgentX, number: 142 }
+
+- id: devcontainer
+  text: It runs your repository's own devcontainer.
+  status: now
+  evidence:
+    - { kind: pr, repo: PrepLabsAI/AgentX, number: 125 }
+    - { kind: pr, repo: PrepLabsAI/AgentX, number: 132 }
+
+- id: loop-guard
+  text: A task that keeps repeating the same failing step stops itself.
+  status: now
+  evidence:
+    - { kind: pr, repo: PrepLabsAI/AgentX, number: 130 }
+    - { kind: file, repo: PrepLabsAI/AgentX, path: specs/033-tool-loop-guard/spec.md }
+
+- id: one-command-setup
+  text: One command sets up the whole deployment and shows a cost estimate first.
+  status: now
+  evidence:
+    - { kind: pr, repo: PrepLabsAI/AgentX, number: 98 }
+    - { kind: file, repo: PrepLabsAI/AgentX, path: packages/cli/src/init/plan.ts }
+
+- id: setup-ends-in-reply
+  text: Setup ends when someone mentions the bot in the new channel and gets a threaded reply.
+  status: now
+  evidence:
+    - { kind: pr, repo: PrepLabsAI/AgentX, number: 148 }
+
+- id: mcp-handoff
+  text: Hand a task to QEDly Code from Claude Code, Codex or Cursor, and follow it to a pull request.
+  status: now
+  note: Merged; verify live before launch.
+  evidence:
+    - { kind: pr, repo: PrepLabsAI/AgentX, number: 149 }
+    - { kind: file, repo: PrepLabsAI/AgentX, path: docs/mcp-install.md }
+
+- id: sign-in
+  text: Developers sign in with Slack or their company's sign-in, with no AWS credentials.
+  status: now
+  evidence:
+    - { kind: pr, repo: PrepLabsAI/AgentX, number: 143 }
+
+- id: model-bakeoff
+  text: "Model choice is measured: in our 65-case test, run three times, Claude Sonnet 4.6 passed 58 of 65 at about $0.025 per turn."
+  status: now
+  evidence:
+    - { kind: file, repo: PrepLabsAI/AgentX, path: specs/015-installer/spec.md }
+
+- id: connectors
+  text: GitHub, Linear, Jira and Asana, from the thread.
+  status: now
+  evidence:
+    - { kind: file, repo: PrepLabsAI/AgentX, path: packages/gateway/src/github.ts }
+    - { kind: file, repo: PrepLabsAI/AgentX, path: packages/gateway/src/linear.ts }
+    - { kind: file, repo: PrepLabsAI/AgentX, path: packages/gateway/src/jira.ts }
+    - { kind: file, repo: PrepLabsAI/AgentX, path: packages/gateway/src/asana.ts }
+
+- id: openrouter
+  text: Bring models through OpenRouter as well as Amazon Bedrock.
+  status: next
+  note: Merged but not verified live (specs/032-openrouter/verification.md).
+  evidence:
+    - { kind: pr, repo: PrepLabsAI/AgentX, number: 139 }
+
+- id: destroy
+  text: Remove an installation with one command.
+  status: next
+  note: Planned as agentx destroy, phase 15e.
+  evidence: []

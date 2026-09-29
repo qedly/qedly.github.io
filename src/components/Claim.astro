@@ -1,0 +1,9 @@
+---
+// Renders one claim's text from the ledger, so page copy about the product cannot drift from its evidence.
+import ledger from "../data/claims.yaml?raw";
+import { loadClaims, claimById } from "../lib/claims";
+
+const { id } = Astro.props as { id: string };
+const claim = claimById(loadClaims(ledger), id);
+---
+<Fragment set:text={claim.text} />
