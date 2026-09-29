@@ -1,0 +1,15 @@
+---
+/** Red-pen strike through text that is wrong. The text stays readable and stays in the page as a <del>. */
+interface Props { delay?: string }
+const { delay = "-5s" } = Astro.props;
+---
+<span class="q-strike">
+  <del><slot /></del>
+  <svg viewBox="0 0 220 40" preserveAspectRatio="none" aria-hidden="true"><path class="q-draw" style={`animation-delay: ${delay}`} d="M4 22 C 40 12, 80 30, 120 18 C 150 10, 185 26, 216 14" fill="none" stroke="var(--q-red)" stroke-width="9" stroke-linecap="round" vector-effect="non-scaling-stroke" /></svg>
+</span>
+<style>
+  .q-strike { position: relative; display: inline-block; }
+  del { text-decoration: none; }
+  svg { position: absolute; left: -4%; top: 38%; width: 108%; height: 0.45em; overflow: visible; pointer-events: none; }
+  path { stroke-width: 0.09em; }
+</style>

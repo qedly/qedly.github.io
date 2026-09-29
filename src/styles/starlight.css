@@ -1,0 +1,16 @@
+/* The docs share the brand's fonts and ink. Links use the ballpoint blue, because green is reserved for "proved". */
+@import "./tokens.css";
+
+:root {
+  --sl-font: var(--q-font-body);
+  --sl-font-mono: var(--q-font-mono);
+  --sl-color-accent-low: #DCE5FA;
+  --sl-color-accent: var(--q-blue);
+  --sl-color-accent-high: #1B3C99;
+}
+:root[data-theme="dark"] {
+  --sl-color-accent-low: #16244A;
+  --sl-color-accent: #8FA9F0;
+  --sl-color-accent-high: #DCE5FA;
+}
+.sl-markdown-content h1, .sl-markdown-content h2, .sl-markdown-content h3 { font-family: var(--q-font-display); letter-spacing: -0.02em; }

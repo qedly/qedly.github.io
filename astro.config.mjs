@@ -15,6 +15,7 @@ export default defineConfig({
         replacesTitle: true,
       },
       favicon: "/brand/favicon.svg",
+      customCss: ["./src/styles/starlight.css"],
       social: [{ icon: "github", label: "GitHub", href: `https://github.com/${SITE.siteRepo}` }],
       head: SITE.launched ? [] : [{ tag: "meta", attrs: { name: "robots", content: "noindex,nofollow" } }],
       sidebar: [{ label: "Docs", items: [{ label: "Overview", slug: "docs" }] }],

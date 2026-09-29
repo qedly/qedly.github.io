@@ -1,0 +1,47 @@
+---
+/**
+ * A two-column proof: Given, To prove, numbered statements with their reasons, then ∴ and the QED stamp.
+ * It is labelled "Illustration" unless it is built from a real receipt (spec 042 FR-016).
+ */
+interface Row { statement: string; reason: string; passed?: boolean; monoReason?: boolean }
+interface Props { title?: string; given: string; toProve: string; rows: Row[]; conclusion: string; illustration?: boolean }
+const { title = "Proof", given, toProve, rows, conclusion, illustration = true } = Astro.props;
+---
+<figure class="q-proof">
+  <figcaption class="q-proof-head">
+    <span class="q-mono">{title}</span>
+    {illustration && <span class="q-mono q-proof-tag">Illustration</span>}
+  </figcaption>
+  <p><strong>Given:</strong> {given}</p>
+  <p><strong>To prove:</strong> {toProve}</p>
+  <table>
+    <thead><tr><th scope="col"><span class="visually-hidden">Step</span></th><th scope="col">Statements</th><th scope="col">Reasons</th></tr></thead>
+    <tbody>
+      {rows.map((row, index) => (
+        <tr class="q-row" style={`animation-delay: ${-8 + index * 0.7}s`}>
+          <td class="q-mono">{index + 1}.</td>
+          <td>{row.statement}{row.passed && <span class="q-pass" aria-label="passed"> ✓</span>}</td>
+          <td class={row.monoReason ? "q-mono" : undefined}>{row.reason}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+  <p class="q-proof-end"><span><span aria-hidden="true">∴ </span>{conclusion}</span><img class="q-stamp" src="/brand/qed-stamp.svg" alt="QED" /></p>
+</figure>
+<style>
+  .q-proof { margin: 0; background: var(--q-paper); border: var(--q-border); box-shadow: var(--q-shadow); padding: 30px 32px; display: grid; gap: 14px; font-size: 1.0625rem; line-height: 1.5; }
+  .q-proof p { margin: 0; }
+  .q-proof-head { display: flex; justify-content: space-between; align-items: center; font-size: 0.8125rem; font-weight: 700; }
+  .q-proof-tag { background: var(--q-ink); color: var(--q-paper); padding: 3px 8px; text-transform: uppercase; font-size: 0.6875rem; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.97rem; border-top: var(--q-border); }
+  th { font-family: var(--q-font-mono); font-size: 0.6875rem; text-transform: uppercase; text-align: left; padding: 8px 0; border-bottom: 1px solid var(--q-ink); }
+  td { padding: 10px 0; border-bottom: 1px solid var(--q-rule); vertical-align: top; }
+  td:first-child { width: 28px; font-size: 0.8125rem; }
+  th:last-child, td:last-child { padding-left: 14px; border-left: 1px solid var(--q-ink); color: var(--q-ink-muted); }
+  td.q-mono { font-size: 0.8125rem; }
+  tr:last-child td { border-bottom: none; }
+  .q-stamp { height: 34px; width: auto; max-width: none; }
+  .q-pass { color: var(--q-green); font-weight: 700; }
+  .q-proof-end { display: flex; justify-content: space-between; align-items: center; border-top: var(--q-border); padding-top: 16px; font-size: 1.25rem; font-weight: 700; }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+</style>

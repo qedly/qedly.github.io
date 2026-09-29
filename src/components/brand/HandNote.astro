@@ -1,0 +1,13 @@
+---
+/**
+ * A handwritten margin note. Red pen corrects or confirms a check, blue ballpoint explains,
+ * yellow is for notes on the dark sections. Keep notes to a few words.
+ */
+interface Props { pen?: "red" | "blue" | "yellow"; tilt?: number }
+const { pen = "blue", tilt = -2 } = Astro.props;
+if (!["red", "blue", "yellow"].includes(pen)) throw new Error(`HandNote pen must be red, blue or yellow, not ${pen}`);
+---
+<span class={`q-hand q-note q-pen-${pen}`} style={`transform: rotate(${tilt}deg)`}><slot /></span>
+<style>
+  .q-note { display: inline-block; font-size: 1.55rem; line-height: 1.05; }
+</style>
