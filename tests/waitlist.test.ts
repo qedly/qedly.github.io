@@ -10,8 +10,8 @@ describe("waitlist", () => {
   it("escapes an odd username rather than building a different address", () => {
     expect(waitlistAction("a/b")).toBe("https://buttondown.com/api/emails/embed-subscribe/a%2Fb");
   });
-  it("tags only the two products that take a waitlist", () => {
-    expect(WAITLIST_TAGS).toEqual(["workspace", "cloud"]);
+  it("lists the two product waitlists and the design-partner list", () => {
+    expect(WAITLIST_TAGS).toEqual(["workspace", "cloud", "partners"]);
   });
 });
 
@@ -21,5 +21,11 @@ describe("WaitlistForm", () => {
     expect(html).toContain('name="email"');
     expect(html).toContain('name="metadata__product" value="cloud"');
     expect(html).not.toContain('name="tag"');
+  });
+  it("uses the label and button it is given, for the design-partner form", async () => {
+    const html = await (await AstroContainer.create()).renderToString(WaitlistForm, { props: { tag: "partners", product: "the design-partner programme", label: "Talk to the founders about a pilot", button: "Become a design partner" } });
+    expect(html).toContain("Talk to the founders about a pilot");
+    expect(html).toContain("Become a design partner");
+    expect(html).toContain('name="metadata__product" value="partners"');
   });
 });

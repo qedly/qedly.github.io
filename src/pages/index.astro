@@ -19,7 +19,7 @@ import { SITE, STATUS_LABEL } from "../config/site";
 const latest = RECEIPTS.slice(0, 3);
 const syllabus = [
   { status: "now" as const, title: "QEDly Code and Checks", job: "Coding in your cloud, checked before it becomes a pull request." },
-  { status: "next" as const, title: "Workspace and Passport", job: "People and any agent in one place, and a record every piece of work carries." },
+  { status: "next" as const, title: "Workspace and Passport", job: "One room per engagement for your people and any agent, AWS's included, and a record every piece of work carries." },
   { status: "later" as const, title: "Outcomes and Cloud", job: "Whether it worked, tied to the bet that asked for it. And all of it, run for you." },
 ];
 const faq = [
@@ -181,6 +181,7 @@ const faq = [
         ))}
       </ol>
       <p><a href="/roadmap/">The roadmap, and the waitlist for {PRODUCTS.filter((product) => product.waitlist).map((product) => product.name.replace("QEDly ", "")).join(" and ")}</a></p>
+      <p class="partners-band">Deliver AWS projects for customers? <a href="/partners/">QEDly for AWS partners</a></p>
     </div>
   </section>
 
@@ -251,6 +252,7 @@ const faq = [
   .measured { padding-top: 0; }
   .label-now { color: var(--q-green); } .label-next { color: var(--q-blue); } .label-later { color: var(--q-amber); }
   .syl-title { font-size: 1.3rem; font-weight: 700; }
+  .partners-band { margin: 0; padding: 14px 18px; border: var(--q-border); background: var(--q-yellow); font-weight: 600; }
   .faq { margin: 0; border-top: var(--q-border); }
   .faq div { padding: 18px 0; border-bottom: 1px solid var(--q-rule); }
   .faq dt { font-weight: 700; }

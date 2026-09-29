@@ -5,19 +5,19 @@
  */
 import { SITE } from "../../config/site";
 import { waitlistAction, type WaitlistTag } from "../../lib/waitlist";
-interface Props { tag: WaitlistTag; product: string }
-const { tag, product } = Astro.props;
+interface Props { tag: WaitlistTag; product: string; label?: string; button?: string; done?: string }
+const { tag, product, label = `Email me when ${product} opens`, button = "Join the waitlist", done = "Check your inbox to confirm your place on the waitlist." } = Astro.props;
 const id = `waitlist-${tag}`;
 ---
 <form class="q-waitlist" action={waitlistAction(SITE.buttondownUser)} method="post" target="_blank" data-waitlist>
-  <label for={id}>Email me when {product} opens</label>
+  <label for={id}>{label}</label>
   <div class="row">
     <input id={id} type="email" name="email" required autocomplete="email" placeholder="you@company.com" />
     <!-- Buttondown tags are a paid feature, so the product the visitor picked travels as subscriber metadata. -->
     <input type="hidden" name="metadata__product" value={tag} />
-    <button type="submit">Join the waitlist</button>
+    <button type="submit">{button}</button>
   </div>
-  <p class="done" role="status" hidden>Check your inbox to confirm your place on the waitlist. Buttondown opened in a new tab in case it needs anything else from you.</p>
+  <p class="done" role="status" hidden>{done} Buttondown opened in a new tab in case it needs anything else from you.</p>
 </form>
 <script>
   for (const form of document.querySelectorAll<HTMLFormElement>("form[data-waitlist]")) {

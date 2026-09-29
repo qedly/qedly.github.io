@@ -1,0 +1,122 @@
+---
+import Marketing from "../layouts/Marketing.astro";
+import PageIntro from "../components/site/PageIntro.astro";
+import Claim from "../components/Claim.astro";
+import Eyebrow from "../components/brand/Eyebrow.astro";
+import Button from "../components/brand/Button.astro";
+import MarkerBox from "../components/brand/MarkerBox.astro";
+import Highlight from "../components/brand/Highlight.astro";
+import HandNote from "../components/brand/HandNote.astro";
+import EngagementRoom from "../components/site/EngagementRoom.astro";
+import WaitlistForm from "../components/site/WaitlistForm.astro";
+
+// Public AWS sources only. Each line states what the linked page says, checked 2026-09-29.
+const shifts = [
+  { date: "March 2026", text: "AWS launched Partner Central agents for co-selling and funding. They connect to partners' systems through MCP, so teams can reach them from the tools they already work in.", href: "https://aws.amazon.com/blogs/apn/introducing-aws-partner-central-agents/", source: "AWS Partner Network blog" },
+  { date: "June 2026", text: "AWS announced Partner-Led Forward Deployed Engineering. Each engagement builds a reusable harness: domain ontologies, evaluation frameworks, MCP servers, agent operations tooling and a context graph.", href: "https://aws.amazon.com/blogs/apn/introducing-forward-deployed-engineering-for-partners-winning-the-future-of-enterprise-ai/", source: "AWS Partner Network blog" },
+  { date: "August 2026", text: "Partners can use Partner Central agents from tools such as Amazon Quick and Kiro, signing in with their AWS identities and IAM permissions.", href: "https://aws.amazon.com/about-aws/whats-new/2026/8/aws-partner-central-mcp/", source: "What's New at AWS" },
+];
+const steps = [
+  { title: "Promise", body: "The milestone and its success criteria come in from the SOW." },
+  { title: "Change", body: "QEDly Code and your engineers do bounded work in the customer's AWS account." },
+  { title: "Checks", body: "Your CodeBuild runs on each exact commit. The agent holds no keys to it." },
+  { title: "Sign-off", body: "The customer approves a packet bound to that version: promised, checked, still unknown." },
+  { title: "Evidence", body: "Funding, competency and case-study drafts are built from what was delivered. A person submits." },
+];
+---
+<Marketing title="QEDly for AWS partners: every agent in one room, and proof for what it delivers" description="For AWS consulting partners delivering AI-assisted work: one room per customer engagement for your people and any agent, with proof of what was delivered." path="/partners/">
+  <PageIntro eyebrow="For AWS partners" tone="blue">
+    <Fragment slot="title">Every agent in one room. <MarkerBox>Proof</MarkerBox> for what it delivers.</Fragment>
+    <p>For AWS consulting partners delivering AI-assisted work to customers. Your people, your customer's approver and any agent work on one engagement together, and every milestone ends with proof of what was delivered.</p>
+    <div class="actions"><Button href="#design-partner">Become a design partner</Button><Button href="/code/" variant="outline">What works today</Button></div>
+  </PageIntro>
+
+  <section class="q-section q-section-white q-stack">
+    <Eyebrow>What is changing</Eyebrow>
+    <h2 class="q-display q-h2">Agents are arriving in partner firms.</h2>
+    <ol class="shifts">
+      {shifts.map((shift) => (
+        <li class="q-card"><p class="q-mono date">{shift.date}</p><p class="q-body">{shift.text}</p><p class="src"><a href={shift.href} rel="noopener">{shift.source}</a></p></li>
+      ))}
+    </ol>
+    <p class="q-body">Partners are adding coding agents of their own on top. Selling, funding and design now have agents. Delivery is where the work actually reaches the customer.</p>
+  </section>
+
+  <section class="q-section q-split">
+    <div class="q-stack">
+      <Eyebrow tone="red">What is missing</Eyebrow>
+      <h2 class="q-display q-h2">No shared room, and no proof.</h2>
+      <p class="q-body">Each agent is a separate tool. The consultant tells the customer it is done, the partner tells AWS it was delivered, and the evidence is <Highlight>rebuilt by hand at sign-off</Highlight>. The more work agents do, the wider that gap gets.</p>
+    </div>
+    <div class="q-card gap">
+      <p class="q-mono tag-line">Our hypothesis: a milestone today</p>
+      <ul class="plain">
+        <li>Requirements in the SOW and in email</li>
+        <li>Work in Git, tickets and chat</li>
+        <li>Test results in a CI log nobody links</li>
+        <li>Sign-off in a meeting</li>
+        <li>Funding evidence assembled afterwards</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="q-section q-section-white q-split top">
+    <div class="q-stack">
+      <Eyebrow tone="blue">The room · Next</Eyebrow>
+      <h2 class="q-display q-h2">Your people and every agent, together.</h2>
+      <p class="q-body"><Claim id="workspace-room" /> <Claim id="partner-central-connector" /></p>
+      <p class="q-body">AWS's agents answer the questions only AWS can answer. QEDly does the building and brings the proof back. We use AWS's agents; we don't replace them.</p>
+      <HandNote pen="blue">today the room is a Slack thread</HandNote>
+    </div>
+    <EngagementRoom />
+  </section>
+
+  <section class="q-section q-stack">
+    <Eyebrow tone="green">What works today · Now</Eyebrow>
+    <h2 class="q-display q-h2">The delivery agent already exists.</h2>
+    <div class="q-grid-3">
+      <div class="q-card"><strong>In your account</strong><p class="q-body"><Claim id="thread-machine" /> <Claim id="model-in-region" /></p></div>
+      <div class="q-card"><strong>Checked, not claimed</strong><p class="q-body"><Claim id="exact-commit-gates" /> <Claim id="no-pr-until-gates" /></p></div>
+      <div class="q-card"><strong>A person decides</strong><p class="q-body"><Claim id="no-force-no-merge" /> <Claim id="tickets-cant-approve" /></p></div>
+    </div>
+    <p><a href="/code/">How QEDly Code works</a> · <a href="/security/">What it can and cannot touch</a></p>
+  </section>
+
+  <section class="q-section q-section-white q-stack">
+    <div class="head-row"><div class="q-stack"><Eyebrow>One milestone, end to end</Eyebrow><h2 class="q-display q-h2">From SOW line to accepted proof.</h2></div><span class="q-tag">Illustration of the proposed flow</span></div>
+    <ol class="flow">
+      {steps.map((step, index) => <li class="q-card"><p class="q-mono num">{index + 1}</p><strong>{step.title}</strong><p class="q-body">{step.body}</p></li>)}
+    </ol>
+    <p class="q-body">The promise is not that AWS will approve your funding. It is that you and your customer can reconstruct exactly what was promised, delivered, checked, left unknown and accepted.</p>
+  </section>
+
+  <section class="q-section q-section-yellow q-split" id="design-partner">
+    <div class="q-stack">
+      <Eyebrow>Design partners</Eyebrow>
+      <h2 class="q-display q-h2">Help us build it around a real engagement.</h2>
+      <p class="q-body ink">Start with 30 minutes on one recent milestone: what was promised, how it was signed off, and what slowed it. If that shows real pain, we rebuild one finished engagement with you, then run one live milestone as a fixed-fee pilot.</p>
+    </div>
+    <div class="q-card">
+      <WaitlistForm tag="partners" product="the design-partner programme" label="Talk to the founders about a pilot" button="Become a design partner" done="Thanks. We'll be in touch." />
+      <p class="small">QEDly is independent and built for AWS partners. It is not an AWS product.</p>
+    </div>
+  </section>
+</Marketing>
+<style>
+  .actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 24px; }
+  .shifts { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+  .date { margin: 0; font-size: 0.8125rem; font-weight: 700; color: var(--q-blue); text-transform: uppercase; }
+  .src { margin: 0; font-size: 0.9375rem; }
+  .gap { gap: 10px; }
+  .tag-line { margin: 0; font-size: 0.8125rem; font-weight: 700; text-transform: uppercase; color: var(--q-red); }
+  .plain { margin: 0; padding-left: 1.1em; display: grid; gap: 8px; font-size: 1.0625rem; color: var(--q-ink-soft); }
+  .top { align-items: start; }
+  .head-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px; }
+  .flow { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 20px; }
+  .num { margin: 0; font-size: 0.8125rem; color: var(--q-ink-muted); }
+  .ink { color: var(--q-ink); }
+  .small { margin: 0; font-size: 0.875rem; color: var(--q-ink-muted); }
+  @media (max-width: 1100px) { .flow { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 900px) { .shifts { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 560px) { .flow { grid-template-columns: minmax(0, 1fr); } }
+</style>

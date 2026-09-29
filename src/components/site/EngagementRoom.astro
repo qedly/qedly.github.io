@@ -1,0 +1,44 @@
+---
+/**
+ * The proposed engagement room (QEDly Workspace, Next) drawn as an illustration: a partner's people, the customer's
+ * approver, AWS's Partner Central agent and QEDly Code in one thread, ending in a receipt. Always labelled.
+ */
+const messages = [
+  { who: "Maya", role: "Partner seller", kind: "person", text: "@AWS agent, is the Acme claims migration eligible for AWS funding?" },
+  { who: "AWS Partner Central agent", role: "AWS's agent, through its MCP server", kind: "aws", text: "A funding program may apply. Two details are missing from the opportunity. Want me to draft the application for your approval?" },
+  { who: "Raj", role: "Engagement lead", kind: "person", text: "@QEDly build milestone 1: the claims API and its tests, per the SOW." },
+  { who: "QEDly", role: "Delivery agent, in Acme's AWS account", kind: "qedly", steps: ["Workspace ready in Acme's AWS account", "Code written · 9 files", "unit-tests and integration passed on 7d1c0a5", "Acceptance packet ready for Dana"] },
+  { who: "Dana", role: "Customer approver, Acme", kind: "person", text: "Approved, on 7d1c0a5." },
+  { who: "QEDly", role: "Delivery agent", kind: "qedly", text: "Receipt recorded. Evidence attached to the funding draft, waiting for Maya to submit it." },
+];
+---
+<figure class="q-room">
+  <figcaption class="q-room-head"><span><strong>Acme claims migration</strong> <span class="q-faint">· engagement room</span></span><span class="q-tag">Illustration</span></figcaption>
+  <ol class="q-room-body">
+    {messages.map((message, index) => (
+      <li class={`q-msg q-row q-${message.kind}`} style={`animation-delay: ${-9 + index * 0.6}s`}>
+        <span class="q-avatar" aria-hidden="true">{message.kind === "qedly" ? "Q" : message.kind === "aws" ? "A" : ""}</span>
+        <div class="q-msg-text">
+          <p><strong>{message.who}</strong> <span class="q-faint">{message.role}</span></p>
+          {message.text && <p>{message.text}</p>}
+          {message.steps && <ul class="q-mono">{message.steps.map((step) => <li><span class="q-pass" aria-hidden="true">✓</span> {step}</li>)}</ul>}
+        </div>
+      </li>
+    ))}
+  </ol>
+</figure>
+<style>
+  .q-room { margin: 0; background: var(--q-paper); border: var(--q-border); box-shadow: 10px 10px 0 var(--q-blue); }
+  .q-room-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 20px; border-bottom: var(--q-border); }
+  .q-faint { color: var(--q-ink-faint); font-weight: 400; font-size: 0.875rem; }
+  .q-room-body { list-style: none; margin: 0; padding: 20px; display: grid; gap: 16px; font-size: 0.97rem; }
+  .q-msg { display: flex; gap: 12px; }
+  .q-msg-text { display: grid; gap: 6px; min-width: 0; }
+  .q-msg p { margin: 0; }
+  .q-avatar { width: 36px; height: 36px; flex-shrink: 0; box-sizing: border-box; border: 2px solid var(--q-ink); display: flex; align-items: center; justify-content: center; font-family: var(--q-font-display); font-weight: 900; }
+  .q-person .q-avatar { background: var(--q-yellow); }
+  .q-aws .q-avatar { background: var(--q-ink); color: var(--q-paper); }
+  .q-qedly .q-avatar { border-width: 3px; }
+  ul { list-style: none; margin: 0; padding: 10px 12px; border: 1px solid var(--q-rule); display: grid; gap: 6px; font-size: 0.84rem; }
+  .q-pass { color: var(--q-green); font-weight: 700; }
+</style>
