@@ -1,0 +1,29 @@
+{
+  "name": "qedly-site",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "test": "vitest run",
+    "check": "astro check",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "^0.42.4",
+    "astro": "^7.2.10",
+    "sharp": "^0.35.3"
+  },
+  "devDependencies": {
+    "@lhci/cli": "^0.15.1",
+    "tsx": "^4.23.15",
+    "vitest": "^5.0.2",
+    "yaml": "^2.9.1",
+    "zod": "^4.6.5"
+  },
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  }
+}
