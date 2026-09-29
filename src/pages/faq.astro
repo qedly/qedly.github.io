@@ -1,0 +1,36 @@
+---
+import Marketing from "../layouts/Marketing.astro";
+import PageIntro from "../components/site/PageIntro.astro";
+import { SITE } from "../config/site";
+import { faqLd } from "../lib/seo";
+import { claimById, loadClaims } from "../lib/claims";
+import ledger from "../data/claims.yaml?raw";
+
+const claims = loadClaims(ledger);
+const claim = (id: string) => claimById(claims, id).text;
+
+// Answers that state product facts are built from the claims ledger, so they cannot drift from the evidence.
+const items = [
+  { q: "What does QEDly mean, and how do I say it?", a: "Say it Q-E-D-lee. It comes from Q.E.D., quod erat demonstrandum, \"which was to be shown\": the letters at the end of a finished proof. QEDly is where work earns its Q.E.D." },
+  { q: "What does source-available mean?", a: `${SITE.licence} You can read it, run it and change it. The one thing the licence rules out is using it to build a competing product or service.` },
+  { q: "What does it cost to run?", a: `${claim("infra-estimate")} Models run on your Amazon Bedrock at your AWS price, with no markup and no seat fee. ${claim("cost-per-task")}` },
+  { q: "Which models does it use?", a: `Amazon Bedrock by default: Claude Sonnet 4.6 for the orchestrator and the coding worker, and Amazon Nova Lite for the check that decides when to ask you first. ${claim("model-bakeoff")} OpenRouter support is next.` },
+  { q: "Does my code leave my AWS account?", a: `${claim("thread-machine")} ${claim("model-in-region")} Your code travels between your GitHub and your AWS account, and your Slack thread sees what the agent tells you.` },
+  { q: "How is it different from Claude Tag, Devin or Copilot's coding agent?", a: "They are capable agents, and each is worth a look. QEDly Code is built around one rule: no pull request until your own checks pass on the exact commit, run where the agent holds no credentials, all in your AWS account. If you don't need that rule, one of them may suit you better." },
+];
+---
+<Marketing title="QEDly FAQ" description="How to say QEDly, what source-available means, what it costs to run, which models it uses, whether code leaves your account, and how it differs from other coding agents." path="/faq/" jsonLd={faqLd(items)}>
+  <PageIntro eyebrow="Questions">
+    <Fragment slot="title">Asked, and answered.</Fragment>
+    <p>The short answers. The <a href="/docs/">docs</a> have the long ones, and the <a href="/security/">security page</a> lists what QEDly does not protect against.</p>
+  </PageIntro>
+  <section class="q-section q-section-white">
+    <dl class="faq">{items.map((item) => <div><dt>{item.q}</dt><dd>{item.a}</dd></div>)}</dl>
+  </section>
+</Marketing>
+<style>
+  .faq { margin: 0; border-top: var(--q-border); max-width: 52em; }
+  .faq div { padding: 22px 0; border-bottom: 1px solid var(--q-rule); }
+  dt { font-weight: 700; font-size: 1.25rem; }
+  dd { margin: 8px 0 0; font-size: 1.125rem; line-height: 1.6; color: var(--q-ink-soft); }
+</style>

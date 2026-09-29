@@ -4,6 +4,7 @@
       "staticDistDir": "dist",
       "url": [
         "/index.html",
+        "/code/index.html",
         "/docs/agentx/releases/index.html"
       ],
       "settings": {

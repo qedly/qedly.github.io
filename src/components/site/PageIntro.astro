@@ -1,0 +1,12 @@
+---
+/** The top of an inner page: eyebrow, headline and a short lede. */
+import Eyebrow from "../brand/Eyebrow.astro";
+interface Props { eyebrow: string; tone?: "ink" | "green" | "red" | "blue" | "yellow" }
+const { eyebrow, tone = "ink" } = Astro.props;
+---
+<section class="q-section q-stack intro">
+  <Eyebrow tone={tone}>{eyebrow}</Eyebrow>
+  <h1 class="q-display q-h1"><slot name="title" /></h1>
+  <div class="q-lede"><slot /></div>
+</section>
+<style>.intro { padding-bottom: clamp(32px, 4vw, 56px); } .intro :global(p) { margin: 0; }</style>

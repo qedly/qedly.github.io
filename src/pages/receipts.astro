@@ -1,0 +1,27 @@
+---
+import Marketing from "../layouts/Marketing.astro";
+import PageIntro from "../components/site/PageIntro.astro";
+import MarkerBox from "../components/brand/MarkerBox.astro";
+import ReceiptCard from "../components/site/ReceiptCard.astro";
+import ReceiptTotals from "../components/site/ReceiptTotals.astro";
+import { RECEIPTS } from "../lib/generated";
+import { SITE } from "../config/site";
+---
+<Marketing title="Receipts: QEDly Code's work on this website" description="Every merged pull request QEDly Code opened on this website, with the commit and the checks that ran on it. Counted from GitHub on every build." path="/receipts/">
+  <PageIntro eyebrow="Receipts" tone="green">
+    <Fragment slot="title">Homework, <MarkerBox>marked.</MarkerBox></Fragment>
+    <p>QEDly Code works on this website. Each receipt below is a merged pull request it opened on <a href={`https://github.com/${SITE.siteRepo}`}>{SITE.siteRepo}</a>, with the commit its checks ran on and a link to each check. The build reads them from GitHub. Nothing here is typed in by hand.</p>
+  </PageIntro>
+  <section class="q-section q-stack">
+    {RECEIPTS.length > 0 ? (
+      <>
+        <ReceiptTotals receipts={RECEIPTS} />
+        <div class="q-grid-3">{RECEIPTS.map((receipt) => <ReceiptCard receipt={receipt} />)}</div>
+      </>
+    ) : (
+      <p class="q-card empty">No receipts yet. The first ones appear here as QEDly Code's pull requests to this site are merged.</p>
+    )}
+    <p class="q-body">A receipt is always a commit and the checks that ran on it, never the agent's own report. A pull request that no check ran on is left out.</p>
+  </section>
+</Marketing>
+<style>.empty { margin: 0; font-size: 1.125rem; max-width: 40em; }</style>

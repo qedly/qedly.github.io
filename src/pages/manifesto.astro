@@ -1,0 +1,38 @@
+---
+import Marketing from "../layouts/Marketing.astro";
+import Eyebrow from "../components/brand/Eyebrow.astro";
+import Highlight from "../components/brand/Highlight.astro";
+import HandNote from "../components/brand/HandNote.astro";
+---
+<Marketing title="Show your work: the QEDly manifesto" description="AI made answers cheap. The answer only counts when the working is on the page. Why QEDly writes the working down." path="/manifesto/">
+  <section class="q-section q-section-night">
+    <article class="q-stack manifesto">
+      <Eyebrow tone="yellow">Manifesto</Eyebrow>
+      <h1 class="q-display q-h1">Show your work.</h1>
+      <p>Every student learned it. The answer on its own never counted. You showed the working, you boxed the result, and someone who had not been in the room could check every line.</p>
+      <p>AI skipped that step. It made answers cheap: plausible code, plausible plans, plausible progress, delivered with confidence and no working at all. "Done" became the most common word in software and the least reliable.</p>
+      <p>Plausible is a feeling. Proof is a commit hash.</p>
+      <h2 class="q-display">What we believe</h2>
+      <ul>
+        <li><strong>The agent never marks its own homework.</strong> A check that the agent can skip, edit or report on itself is not a check.</li>
+        <li><strong>Proof names the exact thing it proved.</strong> The commit, the check, the log. Not "the tests pass", but which tests, on which commit, run where.</li>
+        <li><strong>A person decides.</strong> Agents can do the work. People sign their names to what ships.</li>
+        <li><strong>Work keeps its reason.</strong> Who asked, why, what checked it, who said yes, and whether it worked. Lose that and you have <Highlight>orphaned work</Highlight>, however good the code.</li>
+        <li><strong>Admit the limits first.</strong> We publish what QEDly does not protect against before we promise anything.</li>
+        <li><strong>Your work stays yours.</strong> It runs in your cloud, on your models, and every line of our code is readable.</li>
+      </ul>
+      <p>QEDly Code is the first chapter: an agent that has to show its working before it asks you to merge. The rest of QEDly takes the same rule to every person and every agent on a piece of work, from the first hunch to the result.</p>
+      <p>Other agents say done. We would rather say QED.</p>
+      <p class="sign">Abhishek and Pratik<br /><HandNote pen="yellow">∎</HandNote></p>
+    </article>
+  </section>
+</Marketing>
+<style>
+  .manifesto { max-width: 44em; margin-inline: auto; }
+  .manifesto p, .manifesto li { margin: 0; font-size: clamp(1.125rem, 1.6vw, 1.3rem); line-height: 1.65; color: var(--q-night-text); }
+  .manifesto h2 { margin: 24px 0 0; font-size: clamp(1.8rem, 3.4vw, 2.6rem); color: var(--q-paper); }
+  .manifesto ul { margin: 0; padding-left: 1.2em; display: grid; gap: 14px; }
+  .manifesto strong { color: var(--q-paper); }
+  .manifesto :global(mark) { background: var(--q-yellow); color: var(--q-ink); animation: none; }
+  .sign { margin-top: 12px !important; color: var(--q-paper) !important; font-weight: 700; }
+</style>
