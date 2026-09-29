@@ -29,4 +29,6 @@ This repository is the QEDly website and docs: `https://qedly.github.io`, built 
 - Site-wide values (URL, licence, docs tag, repositories) live only in `src/config/site.ts`.
 - The site sets no cookies.
 - Brand files live in `public/brand/` and follow `public/brand/README.md`. Do not edit them by hand. Regenerate them with `scripts/brand/export.py`.
+- Structured data comes from `src/lib/seo.ts`: `/code` passes `jsonLd={softwareApplicationLd()}` and `/faq` passes `jsonLd={faqLd(items)}` to `Marketing.astro`.
+- `scripts/postbuild.ts` writes `llms.txt`, `llms-full.txt`, the docs `.md` copies, `robots.txt` and `brand/og.png`. Internal pages go in its `INTERNAL` list so they stay out of the sitemap.
 - Keep `SITE.launched` false until the launch PR. It controls `noindex` and `robots.txt`.

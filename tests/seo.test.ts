@@ -9,3 +9,13 @@ describe("robotsTxt", () => {
     expect(robotsTxt(true, "https://qedly.github.io/sitemap-index.xml")).toBe("User-agent: *\nAllow: /\n\nSitemap: https://qedly.github.io/sitemap-index.xml\n");
   });
 });
+
+import { faqLd, softwareApplicationLd } from "../src/lib/seo";
+describe("structured data", () => {
+  it("describes QEDly Code as a SoftwareApplication at the site URL", () => {
+    expect(softwareApplicationLd()).toMatchObject({ "@type": "SoftwareApplication", name: "QEDly Code", url: "https://qedly.github.io/code" });
+  });
+  it("builds FAQPage structured data", () => {
+    expect(faqLd([{ q: "How do I say it?", a: "Q-E-D-lee." }])).toEqual({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: [{ "@type": "Question", name: "How do I say it?", acceptedAnswer: { "@type": "Answer", text: "Q-E-D-lee." } }] });
+  });
+});

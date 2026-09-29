@@ -17,7 +17,11 @@ export default defineConfig({
       favicon: "/brand/favicon.svg",
       customCss: ["./src/styles/starlight.css"],
       social: [{ icon: "github", label: "GitHub", href: `https://github.com/${SITE.siteRepo}` }],
-      head: SITE.launched ? [] : [{ tag: "meta", attrs: { name: "robots", content: "noindex,nofollow" } }],
+      head: [
+        { tag: "meta", attrs: { property: "og:image", content: `${SITE.url}/brand/og.png` } },
+        { tag: "meta", attrs: { name: "twitter:card", content: "summary_large_image" } },
+        ...(SITE.launched ? [] : [{ tag: "meta", attrs: { name: "robots", content: "noindex,nofollow" } }]),
+      ],
       sidebar: [
         { label: "Start", items: [{ label: "Overview", slug: "docs" }] },
         { label: "QEDly Code", items: [{ autogenerate: { directory: "docs/agentx" } }] },

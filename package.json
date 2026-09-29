@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "npm run sync:docs && npm run fetch:receipts && astro build && tsx scripts/postbuild.ts && tsx scripts/check-claims.ts",
     "preview": "astro preview",
     "test": "vitest run",
     "check": "astro check",
