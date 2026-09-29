@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "npm run sync:docs && npm run fetch:receipts && astro build && tsx scripts/postbuild.ts && tsx scripts/check-claims.ts",
+    "build": "npm run sync:docs && npm run fetch:receipts && npm run fetch:stats && astro build && tsx scripts/postbuild.ts && tsx scripts/check-claims.ts",
     "preview": "astro preview",
     "test": "vitest run",
     "check": "astro check",
@@ -12,7 +12,8 @@
     "check:claims": "tsx scripts/check-claims.ts",
     "sync:docs": "tsx scripts/sync-docs.ts",
     "fetch:receipts": "tsx scripts/fetch-receipts.ts",
-    "lighthouse": "lhci autorun && lhci autorun --config=lighthouserc.mobile.json"
+    "lighthouse": "lhci autorun && lhci autorun --config=lighthouserc.mobile.json",
+    "fetch:stats": "tsx scripts/fetch-stats.ts"
   },
   "dependencies": {
     "@astrojs/starlight": "^0.42.4",

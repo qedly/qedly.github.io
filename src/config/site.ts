@@ -9,6 +9,8 @@ export const SITE = {
   siteRepo: "qedly/qedly.github.io",
   qedlyCodeAppLogin: "agentx-sdlc[bot]",
   buttondownUser: "qedly",
+  /** The one place the install command is written. The CLI rename (plan Owner TODO) changes only this. */
+  installCommand: "npx @charterarc/agentx init",
   launched: false,
 } as const;
 

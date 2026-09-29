@@ -1,26 +1,279 @@
 ---
-import { SITE } from "../config/site";
+import Marketing from "../layouts/Marketing.astro";
+import Claim from "../components/Claim.astro";
+import Eyebrow from "../components/brand/Eyebrow.astro";
+import Button from "../components/brand/Button.astro";
+import Strike from "../components/brand/Strike.astro";
+import MarkerBox from "../components/brand/MarkerBox.astro";
+import Highlight from "../components/brand/Highlight.astro";
+import HandNote from "../components/brand/HandNote.astro";
+import ProofTable from "../components/brand/ProofTable.astro";
+import SlackThread from "../components/site/SlackThread.astro";
+import PullRequestCard from "../components/site/PullRequestCard.astro";
+import ReceiptCard from "../components/site/ReceiptCard.astro";
+import ReceiptTotals from "../components/site/ReceiptTotals.astro";
+import { PRODUCTS } from "../data/products";
+import { RECEIPTS, STATS } from "../lib/generated";
+import { SITE, STATUS_LABEL } from "../config/site";
+
+const latest = RECEIPTS.slice(0, 3);
+const syllabus = [
+  { status: "now" as const, title: "QEDly Code and Checks", job: "Coding in your cloud, checked before it becomes a pull request." },
+  { status: "next" as const, title: "Workspace and Passport", job: "People and any agent in one place, and a record every piece of work carries." },
+  { status: "later" as const, title: "Outcomes and Cloud", job: "Whether it worked, tied to the bet that asked for it. And all of it, run for you." },
+];
+const faq = [
+  { q: "How do I say QEDly?", a: "Q-E-D-lee, like the letters at the end of a proof." },
+  { q: "Does my code leave my AWS account?", a: "The workspaces, the checks and the records stay in your account, and the models run on your Amazon Bedrock. Your code travels only between your GitHub and your AWS." },
+  { q: "What does source-available mean?", a: SITE.licence },
+  { q: "Can it merge by itself?", a: "No. It opens the pull request when you ask. A person merges it." },
+];
 ---
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content={SITE.launched ? "index,follow" : "noindex,nofollow"}>
-  <title>{SITE.name}. {SITE.tagline}</title>
-  <meta name="description" content="QEDly is where people and AI agents take work from a hunch to a proven result. QEDly Code is the first product.">
-  <link rel="icon" href="/brand/favicon.svg" type="image/svg+xml">
-  <style>
-    body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #F2F4F6; font-family: system-ui, sans-serif; color: #11151C; }
-    main { display: grid; gap: 20px; justify-items: center; padding-inline: 16px; text-align: center; }
-    img { width: min(420px, 80vw); height: auto; }
-    a { color: #1F3B6E; }
-  </style>
-</head>
-<body>
-  <main>
-    <img src="/brand/lockup-tagline.svg" alt={`${SITE.name}, from hunch to proof`}>
-    <p>The home page is being built. <a href="/docs/">Docs</a></p>
-  </main>
-</body>
-</html>
+<Marketing title="QEDly Code: the AI coding agent that has to prove its work" description="Ask in Slack. QEDly Code works in your own AWS account, runs your CI on the exact commit, and opens the pull request only when every check passes." path="/">
+
+  <section class="q-section hero">
+    <div class="q-stack">
+      <Eyebrow>QEDly Code · the agent that shows its work</Eyebrow>
+      <h1 class="q-display q-h1"><span class="q-grey">Other agents say <Strike>done.</Strike></span><br />QEDly Code says <MarkerBox>QED.</MarkerBox></h1>
+      <p class="q-lede">An AI coding agent that has to <Highlight>prove its work</Highlight>. Ask in Slack. It works in your own AWS account, runs your CI on the exact commit, and opens the pull request only when every check passes.</p>
+      <div class="actions"><Button href="/docs/agentx/quickstart/">Deploy QEDly Code</Button><Button href="#receipts" variant="outline">See the receipts</Button></div>
+      <p class="q-mono small">Source-available · Runs in your AWS account · Amazon Bedrock</p>
+    </div>
+    <div class="q-note-pin hero-proof">
+      <ProofTable
+        title="Proof · #demo-app thread"
+        given='Priya asks, "Add a Notes page to the demo app: API, UI and tests."'
+        toProve="the change works and is ready for a person to merge."
+        rows={[
+          { statement: "The work runs on its own machine.", reason: "This thread's workspace, in your AWS" },
+          { statement: "The code is written.", reason: "commit 4e60f7b · 13 files", monoReason: true },
+          { statement: "Unit tests pass.", reason: "Your CodeBuild, on 4e60f7b", passed: true },
+          { statement: "Integration tests pass.", reason: "Your CodeBuild, on 4e60f7b", passed: true },
+          { statement: "The agent did not mark its own work.", reason: "It holds no CodeBuild keys" },
+          { statement: "A person decides.", reason: "Pull request opened for Priya" },
+        ]}
+        conclusion="The change works."
+      />
+      <p class="pin pin-hero"><HandNote pen="red">steps 3 and 4 ran on the same commit ✓</HandNote></p>
+    </div>
+  </section>
+
+  <section class="q-section q-section-white q-split" id="how">
+    <div class="q-stack">
+      <Eyebrow tone="blue">Step 1 · Ask</Eyebrow>
+      <h2 class="q-display q-h2">Ask in the thread.<br />Watch the working.</h2>
+      <p class="q-body">No new tool. Mention QEDly in a channel and the thread becomes the workspace. <Claim id="thread-machine" /> <Claim id="stop-task" /></p>
+    </div>
+    <div class="q-note-pin">
+      <p class="pin pin-top"><HandNote pen="blue">its own machine, in your AWS</HandNote></p>
+      <SlackThread channel="demo-app" asker="Priya" request="add a Notes page to the demo app: API, UI and tests."
+        steps={["Workspace ready · 2m 13s", "Code written · 13 files, +564 −73", "Checks passed on 4e60f7b", "Pull request opened. A person merges."]}
+        reply="Opened “Add Notes API and UI”. Ask here to change anything." />
+      <p class="pin pin-bottom"><HandNote pen="blue" tilt={2}>anyone here can say “stop”</HandNote></p>
+    </div>
+  </section>
+
+  <section class="q-section q-split">
+    <div class="q-note-pin order-2">
+      <PullRequestCard title="Add Notes API and UI" number={1} branch="agentx/689ebc64" commit="4e60f7b" checks={["unit-tests", "integration"]} requester="Priya" />
+      <p class="under"><span class="q-tag">Illustration</span><HandNote pen="red">checked on the exact commit it pushed</HandNote></p>
+    </div>
+    <div class="q-stack">
+      <Eyebrow tone="green">Step 2 · Prove</Eyebrow>
+      <h2 class="q-display q-h2">No green checks,<br />no pull request.</h2>
+      <p class="q-body"><Claim id="exact-commit-gates" /> <Claim id="no-pr-until-gates" /> <Highlight>A red check means no PR.</Highlight></p>
+    </div>
+  </section>
+
+  <section class="q-section q-section-night">
+    <div class="q-stack">
+      <Eyebrow tone="yellow">Lemma</Eyebrow>
+      <h2 class="q-display q-h2">The agent never grades<br />its own homework.</h2>
+    </div>
+    <ol class="lemma">
+      <li><span class="q-mono">1</span><strong>Slack thread</strong><span>A person asks.</span></li>
+      <li><span class="q-mono">2</span><strong>Orchestrator</strong><span>Plans. Cannot read, edit or run code.</span></li>
+      <li class="lemma-worker"><span class="q-mono">3</span><strong>Worker</strong><span>One isolated machine per thread, in your AWS.</span></li>
+      <li><span class="q-mono">4</span><strong>Your CodeBuild</strong><span>Checks the exact commit.</span></li>
+      <li class="lemma-end"><span class="q-mono">∴</span><strong>Pull request</strong><span>Only after every check passes.</span></li>
+    </ol>
+    <p class="lemma-note"><HandNote pen="yellow">no CodeBuild keys in the worker</HandNote></p>
+    <p class="q-mono small night-foot"><Claim id="orchestrator-no-code" /> <Claim id="per-operation-tokens" /> <Claim id="no-force-no-merge" /> ∎</p>
+  </section>
+
+  <section class="q-section q-stack">
+    <Eyebrow tone="red">Counterexamples we refuse</Eyebrow>
+    <h2 class="q-display q-h2">Three things QEDly Code will never do.</h2>
+    <div class="q-grid-3">
+      <div class="q-card"><p class="refused"><Strike>Mark its own tests as passed</Strike></p><p class="answer">Your CI marks them.</p><p class="q-body"><Claim id="exact-commit-gates" /></p></div>
+      <div class="q-card"><p class="refused"><Strike delay="-4.6s">Merge when it feels ready</Strike></p><p class="answer">A person merges.</p><p class="q-body"><Claim id="no-force-no-merge" /></p></div>
+      <div class="q-card"><p class="refused"><Strike delay="-4.2s">Obey text inside a ticket</Strike></p><p class="answer">Only people approve.</p><p class="q-body"><Claim id="tickets-cant-approve" /></p></div>
+    </div>
+  </section>
+
+  <section class="q-section q-stack measured">
+    <Eyebrow>Measured, not claimed</Eyebrow>
+    <div class="q-grid-4">
+      <div class="q-card"><p class="stat">~2 min</p><p class="q-body"><Claim id="machine-ready-time" /></p><HandNote pen="blue">measured live, PR #105</HandNote></div>
+      <div class="q-card"><p class="stat">5 min</p><p class="q-body"><Claim id="idle-stop" /></p><HandNote pen="blue">PR #95</HandNote></div>
+      <div class="q-card"><p class="stat">58/65</p><p class="q-body"><Claim id="model-bakeoff" /></p><HandNote pen="blue">the full table is public</HandNote></div>
+      <div class="q-card"><p class="stat">Every task</p><p class="q-body"><Claim id="cost-per-task" /> <Claim id="audit-view" /></p><HandNote pen="blue">tokens, model and cost</HandNote></div>
+    </div>
+  </section>
+
+  <section class="q-section q-section-white q-split">
+    <div class="q-stack">
+      <Eyebrow>What QEDly Code is not</Eyebrow>
+      <h2 class="q-display q-h2">Crossed out, on purpose.</h2>
+    </div>
+    <ul class="crossed">
+      <li><Strike delay="-5.2s">An IDE</Strike></li>
+      <li><Strike delay="-5s">An agent framework</Strike></li>
+      <li><Strike delay="-4.8s">An AI that grades other AI</Strike></li>
+      <li><Strike delay="-4.6s">A bot that merges</Strike></li>
+      <li class="crossed-is">It is <Highlight>an agent that shows its work.</Highlight></li>
+    </ul>
+  </section>
+
+  <section class="q-section q-stack" id="receipts">
+    <div class="receipts-head">
+      <div class="q-stack">
+        <Eyebrow tone="green">Marked and returned</Eyebrow>
+        <h2 class="q-display q-h2">QEDly Code works on this website.</h2>
+        <p class="q-body">Every change it makes here comes with a receipt: the pull request, the commit, and the checks that ran on it.</p>
+      </div>
+      {RECEIPTS.length > 0 && <ReceiptTotals receipts={RECEIPTS} />}
+    </div>
+    {latest.length > 0 ? (
+      <div class="q-grid-3">{latest.map((receipt, index) => <ReceiptCard receipt={receipt} tilt={[-1.5, 1, -1][index]} />)}</div>
+    ) : (
+      <p class="q-card empty">The first receipts land here as QEDly Code's pull requests to this site are merged. Nothing on this page is typed in by hand.</p>
+    )}
+    <p><a href="/receipts/">Every receipt links to the pull request and the check that proved it</a></p>
+  </section>
+
+  <section class="q-section q-section-yellow q-split">
+    <div class="q-stack">
+      <Eyebrow>What it costs to run</Eyebrow>
+      <h2 class="q-display q-h2">About $110 a month, plus your model use.</h2>
+    </div>
+    <div class="q-stack">
+      <p class="q-body ink"><Claim id="infra-estimate" /> Models run on your Amazon Bedrock at your AWS price, so there is no markup and no seat fee.</p>
+      <p class="q-body ink"><code class="cmd">agentx init</code> shows its estimate before it creates anything. <a href="/docs/agentx/costs/">How the estimate is worked out</a></p>
+    </div>
+  </section>
+
+  <section class="q-section q-split top">
+    <div class="q-stack">
+      <Eyebrow tone="blue">Works with</Eyebrow>
+      <h2 class="q-display q-h2">Start in the tools you already use.</h2>
+      <p class="q-body"><Claim id="mcp-handoff" /> <Claim id="connectors" /></p>
+      <ul class="chips">{["Slack", "Claude Code", "Codex", "Cursor", "GitHub", "Linear", "Jira", "Asana", "Amazon Bedrock"].map((name) => <li>{name}</li>)}</ul>
+    </div>
+    <div class="q-stack">
+      <Eyebrow>The syllabus</Eyebrow>
+      <ol class="syllabus">
+        {syllabus.map((item) => (
+          <li>
+            <span class={`box box-${item.status}`} aria-hidden="true">{item.status === "now" ? "✓" : ""}</span>
+            <div><p class={`q-mono label label-${item.status}`}>{STATUS_LABEL[item.status]}</p><p class="syl-title">{item.title}</p><p class="q-body">{item.job}</p></div>
+          </li>
+        ))}
+      </ol>
+      <p><a href="/roadmap/">The roadmap, and the waitlist for {PRODUCTS.filter((product) => product.waitlist).map((product) => product.name.replace("QEDly ", "")).join(" and ")}</a></p>
+    </div>
+  </section>
+
+  <section class="q-section q-section-white q-split top">
+    <div class="q-stack">
+      <Eyebrow>Questions</Eyebrow>
+      <h2 class="q-display q-h2">Asked, and answered.</h2>
+      <p><a href="/security/">Read the security page, including what QEDly does not protect against</a></p>
+    </div>
+    <dl class="faq">
+      {faq.map((item) => <div><dt>{item.q}</dt><dd>{item.a}</dd></div>)}
+      <div><dt><a href="/faq/">How is it different from Claude Tag, Devin or Copilot?</a></dt></div>
+    </dl>
+  </section>
+
+  <section class="q-section q-section-night close">
+    <h2 class="q-display show">Show your <span class="underline">work.<svg viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path class="q-draw" style="animation-delay: -4.4s" d="M4 16 C 80 6, 200 22, 296 8" fill="none" stroke="var(--q-yellow)" stroke-width="7" stroke-linecap="round" /></svg></span></h2>
+    <p class="q-body center">AI made answers cheap. The answer only counts when the working is on the page. So that is what QEDly writes down. <a class="light" href="/manifesto/">Read the manifesto</a></p>
+    <div class="install">
+      <p class="q-mono install-tab">Shell</p>
+      <p class="q-mono install-cmd"><span><span class="q-pen-yellow">$</span> {SITE.installCommand}</span></p>
+      <p class="q-mono install-note">The first public release is on its way. Until then, the <a class="light" href="/docs/agentx/quickstart/">quickstart</a> installs from source.</p>
+    </div>
+    {STATS && <p class="q-body center founders">“We're Abhishek and Pratik. Since we rebuilt QEDly Code on 19 September, we've shipped <strong class="q-pen-yellow">{STATS.commits} commits</strong>, and AI agents co-wrote <strong class="q-pen-yellow">{STATS.aiCommits}</strong> of them. We built it because we needed every one of those to prove it worked, without the two of us checking each by hand.”</p>}
+    {STATS && <HandNote pen="yellow">counted from the git history, updated on every build</HandNote>}
+  </section>
+</Marketing>
+
+<style>
+  .hero { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px; align-items: center; padding-bottom: clamp(80px, 9vw, 130px); }
+  .q-grey { color: var(--q-ink-faint); }
+  .actions { display: flex; flex-wrap: wrap; gap: 14px; }
+  .small { margin: 0; font-size: 0.8125rem; color: var(--q-ink-muted); }
+  .pin { margin: 0; }
+  .pin-hero { position: absolute; left: 30px; bottom: -54px; }
+  .pin-top { margin-bottom: 14px; }
+  .pin-bottom { text-align: right; margin-top: 18px; }
+  .under { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; margin: 22px 0 0; }
+  .lemma { list-style: none; margin: 44px 0 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 28px; counter-reset: none; }
+  .lemma li { border: 2px solid var(--q-paper); padding: 18px; display: flex; flex-direction: column; gap: 6px; position: relative; }
+  .lemma li:not(:last-child)::after { content: "→"; position: absolute; right: -24px; top: 16px; color: var(--q-yellow); font-weight: 700; font-size: 1.25rem; }
+  .lemma .q-mono { font-size: 0.75rem; color: #9AA4B2; }
+  .lemma strong { font-size: 1.1875rem; }
+  .lemma li > span:last-child { font-size: 0.9375rem; color: var(--q-night-text); }
+  .lemma-worker { border-color: var(--q-yellow) !important; }
+  .lemma-end { background: var(--q-green); border-color: var(--q-green) !important; color: var(--q-ink); }
+  .lemma-end > span { color: var(--q-ink) !important; }
+  .lemma-note { margin: 18px 0 0; text-align: center; }
+  .night-foot { margin-top: 26px; color: #9AA4B2; max-width: 60em; line-height: 1.6; }
+  .refused { margin: 0; font-size: 1.375rem; color: var(--q-ink-faint); }
+  .answer { margin: 0; font-size: 1.5rem; font-weight: 700; }
+  .stat { margin: 0; font-family: var(--q-font-display); font-weight: 900; font-size: clamp(2.6rem, 4vw, 3.6rem); letter-spacing: -0.04em; line-height: 1; }
+  .crossed { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; font-size: clamp(1.5rem, 2.4vw, 1.75rem); font-weight: 700; color: var(--q-ink-faint); }
+  .crossed-is { margin-top: 10px; color: var(--q-ink); font-size: clamp(1.6rem, 2.6vw, 1.9rem); }
+  .receipts-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 28px; }
+  .empty { margin: 0; font-size: 1.125rem; max-width: 40em; }
+  .ink { color: var(--q-ink); }
+  .cmd { font-family: var(--q-font-mono); font-size: 0.95em; background: var(--q-paper); border: var(--q-border); padding: 2px 8px; }
+  .top { align-items: start; }
+  .chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+  .chips li { border: var(--q-border); padding: 8px 14px; font-weight: 600; background: var(--q-paper); }
+  .syllabus { list-style: none; margin: 0; padding: 0; border-top: var(--q-border); }
+  .syllabus li { display: flex; gap: 18px; padding: 20px 0; border-bottom: 1px solid var(--q-rule); }
+  .syllabus p { margin: 0; }
+  .box { width: 28px; height: 28px; flex-shrink: 0; box-sizing: border-box; border: var(--q-border); display: flex; align-items: center; justify-content: center; font-weight: 700; }
+  .box-now { background: var(--q-green); color: var(--q-paper); }
+  .label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+  .measured { padding-top: 0; }
+  .label-now { color: var(--q-green); } .label-next { color: var(--q-blue); } .label-later { color: var(--q-amber); }
+  .syl-title { font-size: 1.3rem; font-weight: 700; }
+  .faq { margin: 0; border-top: var(--q-border); }
+  .faq div { padding: 18px 0; border-bottom: 1px solid var(--q-rule); }
+  .faq dt { font-weight: 700; }
+  .faq dd { margin: 6px 0 0; color: var(--q-ink-soft); }
+  .close { display: flex; flex-direction: column; align-items: center; gap: 28px; text-align: center; }
+  .show { margin: 0; font-size: clamp(3.5rem, 10vw, 7.5rem); letter-spacing: -0.05em; line-height: 1; }
+  .underline { position: relative; display: inline-block; }
+  .underline svg { position: absolute; left: 0; bottom: -0.15em; width: 100%; height: 0.2em; overflow: visible; }
+  .center { margin-inline: auto; text-align: center; }
+  a.light { color: var(--q-paper); }
+  .install { width: min(680px, 100%); text-align: left; }
+  .install p { margin: 0; }
+  .install-tab { display: inline-block; padding: 10px 18px; background: var(--q-paper); color: var(--q-ink); font-weight: 700; font-size: 0.875rem; }
+  .install-cmd { border: 2px solid var(--q-paper); padding: 20px 22px; font-size: clamp(0.95rem, 2.4vw, 1.125rem); overflow-wrap: anywhere; }
+  .install-note { margin-top: 12px !important; font-size: 0.8125rem; color: #9AA4B2; }
+  .founders { max-width: 40em; }
+  @media (max-width: 1100px) {
+    .lemma { grid-template-columns: minmax(0, 1fr); gap: 34px; }
+    .lemma li:not(:last-child)::after { content: "↓"; right: auto; left: 18px; top: auto; bottom: -32px; }
+  }
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: minmax(0, 1fr); }
+    .order-2 { order: 2; }
+    .pin-hero { position: static; margin-top: 22px; }
+  }
+</style>

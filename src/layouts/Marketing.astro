@@ -1,6 +1,7 @@
 ---
 /** The shared shell for every marketing page: meta tags, the build banner, header, footer. */
 import "../styles/tokens.css";
+import "../styles/page.css";
 import FontPreload from "../components/brand/FontPreload.astro";
 import { SITE, absoluteUrl } from "../config/site";
 import Button from "../components/brand/Button.astro";
@@ -38,7 +39,7 @@ const nav = [
 <body class="q-paper-grid">
   <a class="q-skip" href="#main">Skip to content</a>
   <div class="q-banner">
-    <span>This site is built by QEDly Code. Every change comes with a receipt.</span>
+    <span>QEDly Code works on this site. Every change it makes comes with a receipt.</span>
     <a href="/receipts/">See the receipts</a>
   </div>
   <header class="q-header">

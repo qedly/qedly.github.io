@@ -1,0 +1,23 @@
+/* Section layout shared by the marketing pages. Every grid falls to one column on a phone. */
+.q-section { padding: clamp(56px, 8vw, 110px) var(--q-gutter); }
+.q-section-white { background: var(--q-paper); border-block: var(--q-border); }
+.q-section-night { background: var(--q-night); color: var(--q-paper); }
+.q-section-yellow { background: var(--q-yellow); border-block: var(--q-border); }
+.q-split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(40px, 5vw, 72px); align-items: center; }
+.q-stack { display: flex; flex-direction: column; gap: 22px; min-width: 0; }
+.q-h1 { margin: 0; font-size: clamp(2.75rem, 6.2vw, 5.5rem); }
+.q-h2 { margin: 0; font-size: clamp(2.1rem, 4.4vw, 4rem); line-height: 1; }
+.q-lede { margin: 0; font-size: clamp(1.125rem, 1.6vw, 1.375rem); line-height: 1.55; max-width: 38em; }
+.q-body { margin: 0; font-size: clamp(1.0625rem, 1.4vw, 1.25rem); line-height: 1.6; color: var(--q-ink-soft); max-width: 36em; }
+.q-section-night .q-body { color: var(--q-night-text); }
+.q-card { background: var(--q-paper); border: var(--q-border); padding: clamp(20px, 2.4vw, 30px); display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.q-grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.q-grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
+.q-tag { font-family: var(--q-font-mono); font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; background: var(--q-ink); color: var(--q-paper); padding: 3px 8px; }
+.q-note-pin { position: relative; }
+.q-prose { max-width: var(--q-measure); }
+.q-prose h2 { font-family: var(--q-font-display); font-weight: 900; letter-spacing: -0.03em; font-size: clamp(1.6rem, 3vw, 2.25rem); line-height: 1.1; margin: 2em 0 0.5em; }
+.q-prose p, .q-prose li { font-size: 1.125rem; line-height: 1.65; color: var(--q-ink-soft); }
+@media (max-width: 1100px) { .q-grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 900px) { .q-split, .q-grid-3 { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 560px) { .q-grid-4 { grid-template-columns: minmax(0, 1fr); } }
