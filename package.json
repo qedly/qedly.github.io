@@ -8,7 +8,8 @@
     "preview": "astro preview",
     "test": "vitest run",
     "check": "astro check",
-    "astro": "astro"
+    "astro": "astro",
+    "check:claims": "tsx scripts/check-claims.ts"
   },
   "dependencies": {
     "@astrojs/starlight": "^0.42.4",
