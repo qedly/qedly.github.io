@@ -1,0 +1,84 @@
+---
+import Marketing from "../layouts/Marketing.astro";
+import PageIntro from "../components/site/PageIntro.astro";
+import Claim from "../components/Claim.astro";
+import Eyebrow from "../components/brand/Eyebrow.astro";
+import Button from "../components/brand/Button.astro";
+import MarkerBox from "../components/brand/MarkerBox.astro";
+import HandNote from "../components/brand/HandNote.astro";
+import SlackThread from "../components/site/SlackThread.astro";
+import PullRequestCard from "../components/site/PullRequestCard.astro";
+import { SITE } from "../config/site";
+import { softwareApplicationLd } from "../lib/seo";
+
+const steps = [
+  { title: "Install it in your AWS account", body: "One command walks you through it: the stacks, its own GitHub App and Slack app, sign-in, and your first project.", claim: "one-command-setup" },
+  { title: "Point it at a repository", body: "A project file names the repository, how to set it up, and the checks every change must pass: your own CodeBuild projects.", claim: undefined },
+  { title: "Ask in the channel", body: "Mention it in the project's Slack channel. The thread gets its own machine, and the conversation remembers everything.", claim: "thread-memory" },
+  { title: "Get a pull request that passed", body: "When you ask for one, it runs your checks on the exact commit, and only if they pass does the pull request exist.", claim: "no-pr-until-gates" },
+];
+---
+<Marketing title="QEDly Code: coding in your cloud, proved before it becomes a pull request" description="QEDly Code is an AI coding agent you ask in Slack. It runs in your AWS account and opens a pull request only after your own checks pass on the exact commit." path="/code/" jsonLd={softwareApplicationLd()}>
+  <PageIntro eyebrow="QEDly Code · Now">
+    <Fragment slot="title">The coding agent that <MarkerBox>shows its work.</MarkerBox></Fragment>
+    <p>Ask in Slack. QEDly Code works on its own machine in your AWS account, then runs your checks on the exact commit it pushed. <Claim id="no-force-no-merge" /></p>
+    <div class="actions"><Button href="/docs/agentx/quickstart/">Deploy QEDly Code</Button><Button href="/docs/agentx/concepts/" variant="outline">How it works</Button></div>
+  </PageIntro>
+
+  <section class="q-section q-section-white q-split" id="how">
+    <div class="q-stack">
+      <Eyebrow tone="blue">How it proves</Eyebrow>
+      <h2 class="q-display q-h2">One thread, start to finish.</h2>
+      <p class="q-body">A request in Slack, the working as it happens, the checks on the commit, and a pull request a person can merge. Follow-ups go in the same thread. <Claim id="stop-task" /></p>
+      <HandNote pen="blue">the thread is the workspace</HandNote>
+    </div>
+    <SlackThread channel="payments" asker="Dana" request="retry the refund webhook twice on a 5xx, with tests, then open a pull request."
+      steps={["Workspace ready · 2m 05s", "Code written · 3 files, +88 −12", "Readiness checks passed in the workspace", "unit-tests and integration passed on 4f2a9c1", "Pull request opened. A person merges."]}
+      reply="Opened “Retry refund webhook on 5xx”. Ask here to change anything." time="10:14" />
+  </section>
+
+  <section class="q-section q-split">
+    <div class="order-2"><PullRequestCard title="Retry refund webhook on 5xx" number={482} branch="agentx/7d1c0a52" commit="4f2a9c1" checks={["unit-tests", "integration"]} requester="Dana" /><p class="under"><span class="q-tag">Illustration</span></p></div>
+    <div class="q-stack">
+      <Eyebrow tone="green">Checks</Eyebrow>
+      <h2 class="q-display q-h2">Your CI marks the work.</h2>
+      <p class="q-body"><Claim id="exact-commit-gates" /> <Claim id="per-operation-tokens" /></p>
+    </div>
+  </section>
+
+  <section class="q-section q-section-white q-stack">
+    <Eyebrow>Getting started</Eyebrow>
+    <h2 class="q-display q-h2">Four steps to your first proof.</h2>
+    <ol class="q-grid-4 steps">
+      {steps.map((step, index) => (
+        <li class="q-card"><span class="q-mono num">{index + 1}</span><strong>{step.title}</strong><p class="q-body">{step.body}{step.claim && <> <Claim id={step.claim} /></>}</p></li>
+      ))}
+    </ol>
+    <p class="q-mono cmd"><span class="q-pen-blue">$</span> {SITE.installCommand}</p>
+    <p class="q-body">The first public release is on its way. Until then, the <a href="/docs/agentx/quickstart/">quickstart</a> installs from a source checkout.</p>
+  </section>
+
+  <section class="q-section q-section-yellow q-split">
+    <div class="q-stack"><Eyebrow>What it costs to run</Eyebrow><h2 class="q-display q-h2">About $110 a month, plus your model use.</h2></div>
+    <div class="q-stack">
+      <p class="q-body ink"><Claim id="infra-estimate" /> <Claim id="cost-per-task" /></p>
+      <p class="q-mono small">Estimate from <code>agentx init</code>. Model tokens are extra. <a href="/docs/agentx/costs/">See every line of the estimate</a></p>
+    </div>
+  </section>
+
+  <section class="q-section q-grid-3">
+    <div class="q-card"><strong>In your account</strong><p class="q-body"><Claim id="thread-machine" /> <Claim id="model-in-region" /></p></div>
+    <div class="q-card"><strong>Where you already work</strong><p class="q-body"><Claim id="mcp-handoff" /> <Claim id="connectors" /></p></div>
+    <div class="q-card"><strong>Cheap when idle</strong><p class="q-body"><Claim id="idle-stop" /> <Claim id="machine-ready-time" /></p></div>
+  </section>
+</Marketing>
+<style>
+  .actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 24px; }
+  .under { margin: 18px 0 0; }
+  .steps { list-style: none; margin: 0; padding: 0; }
+  .num { font-size: 0.8125rem; color: var(--q-ink-muted); }
+  .cmd { margin: 0; border: var(--q-border); background: var(--q-paper); padding: 18px 20px; font-size: clamp(0.95rem, 2.4vw, 1.125rem); overflow-wrap: anywhere; }
+  .ink { color: var(--q-ink); }
+  .small { margin: 0; font-size: 0.8125rem; }
+  @media (max-width: 900px) { .order-2 { order: 2; } }
+</style>

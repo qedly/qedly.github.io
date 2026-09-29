@@ -1,0 +1,34 @@
+---
+import Marketing from "../layouts/Marketing.astro";
+import PageIntro from "../components/site/PageIntro.astro";
+import Eyebrow from "../components/brand/Eyebrow.astro";
+import MarkerBox from "../components/brand/MarkerBox.astro";
+import { STATS } from "../lib/generated";
+---
+<Marketing title="About QEDly: which was to be shown" description="Where the name QEDly comes from, what the boxed logo means, and who is building it." path="/about/">
+  <PageIntro eyebrow="About">
+    <Fragment slot="title">Which was to be <MarkerBox>shown.</MarkerBox></Fragment>
+    <p>Every proof in mathematics ends the same way: three letters, Q.E.D., and a small black square. That is the moment an argument stops being plausible and becomes true.</p>
+  </PageIntro>
+  <section class="q-section q-section-white q-split top">
+    <div class="q-stack">
+      <Eyebrow>The name</Eyebrow>
+      <h2 class="q-display q-h2">QEDly, said Q-E-D-lee.</h2>
+    </div>
+    <div class="q-stack q-prose">
+      <p>Q.E.D. stands for <em>quod erat demonstrandum</em>, "which was to be shown". The "-ly" makes it friendly. AI made plausible cheap: plausible code, plausible plans, plausible progress. QEDly is where work earns its Q.E.D.: why it exists, who took it forward, what checked it, who said yes, and whether it worked.</p>
+      <p>The logo boxes the answer. Every student boxed a final answer once the working was shown, so QED sits in a drawn box with "ly" outside it. The same small green box starts every receipt, and green only ever means proved.</p>
+    </div>
+  </section>
+  <section class="q-section q-split top">
+    <div class="q-stack">
+      <Eyebrow>Who</Eyebrow>
+      <h2 class="q-display q-h2">Two founders, and a lot of agents.</h2>
+    </div>
+    <div class="q-stack q-prose">
+      <p>We're Abhishek and Pratik.{STATS && <> Since we rebuilt QEDly Code on 19 September, we've shipped {STATS.commits} commits, and AI agents co-wrote {STATS.aiCommits} of them.</>} We built QEDly because we needed every one of those changes to prove it worked, without the two of us checking each by hand.</p>
+      <p>QEDly Code is the first product. The <a href="/roadmap/">roadmap</a> shows what comes next, and the <a href="/manifesto/">manifesto</a> says why.</p>
+    </div>
+  </section>
+</Marketing>
+<style>.top { align-items: start; } .q-prose p { margin: 0; font-size: 1.1875rem; line-height: 1.65; color: var(--q-ink-soft); }</style>

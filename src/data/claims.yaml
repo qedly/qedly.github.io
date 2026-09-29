@@ -147,6 +147,31 @@
   evidence:
     - { kind: file, repo: PrepLabsAI/AgentX, path: specs/015-installer/spec.md }
 
+- id: signed-invocations
+  text: Every job sent to a worker is signed with a KMS key only the dispatcher may use, and the worker checks the signature before it starts.
+  status: now
+  evidence:
+    - { kind: file, repo: PrepLabsAI/AgentX, path: infra/lib/control-plane.ts }
+    - { kind: file, repo: PrepLabsAI/AgentX, path: docs/architecture-production.md }
+
+- id: permission-boundary
+  text: Every role an installation creates carries an IAM permission boundary, yours or a default one that denies account, Organizations and IAM user changes.
+  status: now
+  evidence:
+    - { kind: file, repo: PrepLabsAI/AgentX, path: docs/architecture-production.md }
+
+- id: turn-records
+  text: Each Slack request leaves one turn record, kept for 30 days. Tokens, request text and response text are never written to CloudWatch Logs.
+  status: now
+  evidence:
+    - { kind: file, repo: PrepLabsAI/AgentX, path: README.md }
+
+- id: model-in-region
+  text: By default, every model call goes to Amazon Bedrock in your own AWS account and region.
+  status: now
+  evidence:
+    - { kind: file, repo: PrepLabsAI/AgentX, path: packages/model-runtime/src/config.ts }
+
 - id: infra-estimate
   text: At the default settings, agentx init estimates about $110 a month for the AWS infrastructure. Model use is extra.
   status: now

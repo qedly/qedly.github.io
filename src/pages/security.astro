@@ -1,0 +1,56 @@
+---
+import Marketing from "../layouts/Marketing.astro";
+import PageIntro from "../components/site/PageIntro.astro";
+import Claim from "../components/Claim.astro";
+import Eyebrow from "../components/brand/Eyebrow.astro";
+import Strike from "../components/brand/Strike.astro";
+import { bulletsHtml, sectionOf } from "../lib/markdown";
+
+// Quoted word for word from AgentX docs/security.md at the synced docs ref (spec 042 US3 scenario 2). Never rewritten here.
+const synced = import.meta.glob<string>("../content/docs/docs/agentx/security.md", { eager: true, query: "?raw", import: "default" });
+const source = synced["../content/docs/docs/agentx/security.md"];
+if (!source && import.meta.env.PROD) throw new Error("docs/security.md is not synced; its limits section must be quoted on /security/");
+const limits = source ? bulletsHtml(sectionOf(source, "What AgentX does not protect against")) : "<p>Run npm run sync:docs to quote the limits.</p>";
+
+const controls = [
+  { area: "What the agent can touch", claims: ["orchestrator-no-code", "thread-machine"] },
+  { area: "Who marks the work", claims: ["exact-commit-gates", "no-pr-until-gates"] },
+  { area: "GitHub access", claims: ["per-operation-tokens", "no-force-no-merge"] },
+  { area: "Who can approve", claims: ["tickets-cant-approve", "stop-task"] },
+  { area: "Worker jobs", claims: ["signed-invocations"] },
+  { area: "AWS permissions", claims: ["permission-boundary"] },
+  { area: "What is recorded", claims: ["turn-records", "audit-view", "cost-per-task"] },
+  { area: "What leaves the account", claims: ["model-in-region"] },
+];
+---
+<Marketing title="Security: what QEDly Code can and cannot touch" description="Exactly what QEDly Code's agent can reach, where credentials live, what is recorded, and what QEDly does not protect against." path="/security/">
+  <PageIntro eyebrow="Security" tone="red">
+    <Fragment slot="title">Specifics, not <Strike>adjectives.</Strike></Fragment>
+    <p>QEDly Code runs in your AWS account. Here is what its agent can and cannot touch, where the credentials live, what is recorded, and what it does not protect against. The <a href="/docs/agentx/security/">security guide</a> has the detail behind each line.</p>
+  </PageIntro>
+
+  <section class="q-section q-section-white">
+    <dl class="controls">
+      {controls.map((control) => (
+        <div><dt class="q-mono">{control.area}</dt><dd>{control.claims.map((id) => <p><Claim id={id} /></p>)}</dd></div>
+      ))}
+    </dl>
+  </section>
+
+  <section class="q-section q-stack">
+    <Eyebrow tone="red">Limits</Eyebrow>
+    <h2 class="q-display q-h2">What QEDly does not protect against.</h2>
+    <p class="q-body">Quoted from the <a href="/docs/agentx/security/#what-agentx-does-not-protect-against">security guide</a>, as written. Plan around these.</p>
+    <div class="q-prose limits" set:html={limits} />
+  </section>
+</Marketing>
+<style>
+  .controls { margin: 0; display: grid; border-top: var(--q-border); }
+  .controls div { display: grid; grid-template-columns: minmax(180px, 1fr) 3fr; gap: 12px 32px; padding: 22px 0; border-bottom: 1px solid var(--q-rule); }
+  dt { font-size: 0.8125rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding-top: 4px; }
+  dd { margin: 0; display: grid; gap: 8px; font-size: 1.125rem; line-height: 1.55; }
+  dd p { margin: 0; }
+  .limits :global(ul) { padding-left: 1.2em; display: grid; gap: 12px; }
+  .limits :global(code) { font-family: var(--q-font-mono); font-size: 0.9em; }
+  @media (max-width: 700px) { .controls div { grid-template-columns: minmax(0, 1fr); } }
+</style>
