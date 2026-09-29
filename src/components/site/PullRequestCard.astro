@@ -1,0 +1,22 @@
+---
+/** A pull request as GitHub shows it, drawn as an illustration, with the QED footer line. */
+interface Props { title: string; number: number; branch: string; commit: string; checks: string[]; requester: string }
+const { title, number, branch, commit, checks, requester } = Astro.props;
+---
+<figure class="q-pr">
+  <div class="q-pr-head"><p class="q-pr-title">{title} <span class="q-faint">#{number}</span></p><p class="q-pr-sub">agentx-sdlc wants to merge 1 commit from {branch}</p></div>
+  <div class="q-pr-checks"><p><strong>All checks have passed</strong></p>{checks.map((check) => <p><span class="q-pass" aria-label="passed">✓</span> <span class="q-mono">{check}</span> <span class="q-faint">· CodeBuild · {commit}</span></p>)}</div>
+  <figcaption class="q-pr-foot q-mono"><img class="q-stamp" src="/brand/qed-stamp.svg" alt="QED" />{checks.length} of {checks.length} checks passed on {commit} · requested by {requester}</figcaption>
+</figure>
+<style>
+  .q-pr { margin: 0; background: var(--q-paper); border: var(--q-border); box-shadow: 10px 10px 0 var(--q-green); }
+  .q-pr p { margin: 0; }
+  .q-pr-head, .q-pr-checks { padding: 18px 22px; border-bottom: 1px solid var(--q-rule); display: grid; gap: 8px; }
+  .q-pr-title { font-size: 1.375rem; font-weight: 700; line-height: 1.2; }
+  .q-pr-sub { font-size: 0.875rem; color: var(--q-ink-muted); overflow-wrap: anywhere; }
+  .q-pr-checks { font-size: 0.95rem; }
+  .q-faint { color: var(--q-ink-faint); font-weight: 400; }
+  .q-pass { color: var(--q-green); font-weight: 700; }
+  .q-pr-foot { padding: 18px 22px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; font-size: 0.8125rem; }
+  .q-stamp { height: 20px; width: auto; max-width: none; }
+</style>

@@ -1,0 +1,32 @@
+---
+/** A Slack thread drawn as an illustration: one request, QEDly's checklist, and its reply. Always labelled. */
+interface Props { channel: string; asker: string; request: string; steps: string[]; reply: string; time?: string }
+const { channel, asker, request, steps, reply, time = "9:42" } = Astro.props;
+---
+<figure class="q-thread">
+  <figcaption class="q-thread-head"><span><strong># {channel}</strong> <span class="q-faint">· thread</span></span><span class="q-tag">Illustration</span></figcaption>
+  <div class="q-thread-body">
+    <div class="q-msg"><span class="q-avatar q-avatar-person" aria-hidden="true"></span><div><strong>{asker}</strong> <span class="q-time">{time}</span><p>@QEDly {request}</p></div></div>
+    <div class="q-msg"><span class="q-avatar q-avatar-bot" aria-hidden="true">Q</span>
+      <div class="q-msg-bot"><div><strong>QEDly</strong> <span class="q-time">{time.replace(/\d+$/, (m) => String(Number(m) + 1).padStart(2, "0"))}</span></div>
+        <ol class="q-checklist q-mono">{steps.map((step, index) => <li class="q-row" style={`animation-delay: ${-8 + index * 0.6}s`}><span class="q-pass" aria-hidden="true">✓</span> {step}</li>)}</ol>
+        <p>{reply}</p>
+      </div>
+    </div>
+  </div>
+</figure>
+<style>
+  .q-thread { margin: 0; background: var(--q-paper); border: var(--q-border); box-shadow: 10px 10px 0 var(--q-blue); overflow: hidden; }
+  .q-thread-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 20px; border-bottom: var(--q-border); }
+  .q-faint, .q-time { color: var(--q-ink-faint); font-weight: 400; }
+  .q-time { font-size: 0.8125rem; }
+  .q-thread-body { padding: 20px; display: grid; gap: 16px; font-size: 0.97rem; }
+  .q-msg { display: flex; gap: 12px; }
+  .q-msg p { margin: 0; }
+  .q-msg-bot { display: grid; gap: 10px; flex: 1; min-width: 0; }
+  .q-avatar { width: 36px; height: 36px; flex-shrink: 0; box-sizing: border-box; border: 2px solid var(--q-ink); }
+  .q-avatar-person { background: var(--q-yellow); }
+  .q-avatar-bot { border-width: 3px; display: flex; align-items: center; justify-content: center; font-family: var(--q-font-display); font-weight: 900; font-size: 15px; }
+  .q-checklist { list-style: none; margin: 0; padding: 12px 14px; border: 1px solid var(--q-rule); display: grid; gap: 8px; font-size: 0.84rem; }
+  .q-pass { color: var(--q-green); font-weight: 700; }
+</style>

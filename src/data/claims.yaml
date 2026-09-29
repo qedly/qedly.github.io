@@ -147,6 +147,13 @@
   evidence:
     - { kind: file, repo: PrepLabsAI/AgentX, path: specs/015-installer/spec.md }
 
+- id: infra-estimate
+  text: At the default settings, agentx init estimates about $110 a month for the AWS infrastructure. Model use is extra.
+  status: now
+  note: "NAT $65.70, Fargate $14.42, workers $2.31, root volumes $0.20, workspace volumes $16.00, small services $10.00, at the plan's stated usage."
+  evidence:
+    - { kind: file, repo: PrepLabsAI/AgentX, path: packages/cli/src/init/plan.ts }
+
 - id: connectors
   text: GitHub, Linear, Jira and Asana, from the thread.
   status: now
