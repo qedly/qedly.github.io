@@ -200,3 +200,16 @@
   status: next
   note: Planned as agentx destroy, phase 15e.
   evidence: []
+
+- id: workspace-room
+  text: One room per customer engagement, where your people and any agent, AWS's included, work with the working shown.
+  status: next
+  note: QEDly Workspace. Today the room is a Slack thread with QEDly Code.
+  evidence: []
+
+- id: partner-central-connector
+  text: AWS Partner Central agents in the same room, through AWS's own MCP server, with a person approving every write.
+  status: next
+  note: Proposed connector on the AgentX connector gateway; not built yet.
+  evidence: []
+

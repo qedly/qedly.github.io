@@ -58,6 +58,7 @@ const nav = [
   <main id="main"><slot /></main>
   <footer class="q-footer">
     <img class="q-logo q-logo-small" src="/brand/wordmark.svg" alt={SITE.name} />
+    <p class="q-footer-links"><a href="/partners/">For AWS partners</a> · <a href="/roadmap/">Roadmap</a> · <a href="/manifesto/">Manifesto</a> · <a href="/about/">About</a> · <a href="/faq/">FAQ</a></p>
     <p class="q-mono">{SITE.licence} · Said Q-E-D-lee · {SITE.tagline}</p>
   </footer>
 </body>
@@ -85,4 +86,5 @@ const nav = [
   .q-github { border: var(--q-border); padding: 8px 14px; font-weight: 600; font-size: 0.9375rem; min-height: 44px; box-sizing: border-box; display: inline-flex; align-items: center; }
   .q-footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; padding: 40px var(--q-gutter); background: var(--q-paper); border-top: var(--q-border); }
   .q-footer p { margin: 0; font-size: 0.8125rem; color: var(--q-ink-muted); }
+  .q-footer .q-footer-links { font-size: 0.9375rem; color: var(--q-ink); }
 </style>

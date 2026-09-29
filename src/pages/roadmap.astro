@@ -3,6 +3,7 @@ import Marketing from "../layouts/Marketing.astro";
 import PageIntro from "../components/site/PageIntro.astro";
 import Eyebrow from "../components/brand/Eyebrow.astro";
 import WaitlistForm from "../components/site/WaitlistForm.astro";
+import Claim from "../components/Claim.astro";
 import { PRODUCTS } from "../data/products";
 import { STATUS_LABEL, type Status } from "../config/site";
 
@@ -27,6 +28,7 @@ const groups: { status: Status; tone: "green" | "blue" | "ink"; lede: string }[]
             <h2 class="name">{product.name}</h2>
             <p class="q-body">{product.job}</p>
             {product.status === "now" && product.name === "QEDly Code" && <p><a href="/code/">What QEDly Code does today</a></p>}
+            {product.name === "QEDly Workspace" && <p class="q-body"><Claim id="partner-central-connector" /> <a href="/partners/">For AWS partners</a></p>}
             {product.waitlist && <WaitlistForm tag={product.waitlist} product={product.name} />}
           </article>
         ))}
