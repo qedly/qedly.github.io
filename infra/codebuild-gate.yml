@@ -1,0 +1,67 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: QEDly site gate - the CodeBuild project QEDly Code runs on the exact commit of each site pull request (spec 042 FR-020)
+
+Parameters:
+  ReadTokenSecretName:
+    Type: String
+    Default: qedly-site/agentx-readonly
+    Description: Secrets Manager secret holding a read-only token for PrepLabsAI/AgentX, stored as plain text
+
+Resources:
+  Logs:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: /aws/codebuild/agentx-qedly-site-build
+      RetentionInDays: 30
+
+  Role:
+    Type: AWS::IAM::Role
+    Properties:
+      Description: Runs the QEDly site gate - writes its logs and reads one read-only token
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal: { Service: codebuild.amazonaws.com }
+            Action: sts:AssumeRole
+            Condition:
+              StringEquals: { "aws:SourceAccount": !Ref AWS::AccountId }
+      Policies:
+        - PolicyName: gate
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: [logs:CreateLogStream, logs:PutLogEvents]
+                Resource: !Sub "${Logs.Arn}:*"
+              - Effect: Allow
+                Action: secretsmanager:GetSecretValue
+                Resource: !Sub "arn:${AWS::Partition}:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:${ReadTokenSecretName}-??????"
+
+  Project:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      # AgentX's broker may start only projects whose name begins with agentx-.
+      Name: agentx-qedly-site-build
+      Description: Tests, builds and Lighthouse-checks qedly.github.io on the commit AgentX supplies
+      ServiceRole: !GetAtt Role.Arn
+      # The repository is public, so CodeBuild clones it without a GitHub connection.
+      Source:
+        Type: GITHUB
+        Location: https://github.com/qedly/qedly.github.io.git
+        BuildSpec: buildspec.yml
+        GitCloneDepth: 1
+      Artifacts: { Type: NO_ARTIFACTS }
+      Environment:
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_MEDIUM
+        Image: aws/codebuild/standard:7.0
+      LogsConfig:
+        CloudWatchLogs: { Status: ENABLED, GroupName: !Ref Logs }
+      TimeoutInMinutes: 20
+      Tags:
+        - { Key: agentx:purpose, Value: qedly-site-gate }
+
+Outputs:
+  ProjectName:
+    Value: !Ref Project
