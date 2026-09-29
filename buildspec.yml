@@ -1,0 +1,20 @@
+# The QEDly Code gate for this repository (spec 042 FR-020): the CodeBuild project
+# agentx-qedly-site-build runs this on the exact commit of each pull request.
+# AGENTX_READ_TOKEN resolves from Secrets Manager at run time and never appears in logs.
+version: 0.2
+env:
+  variables:
+    DOCS_REF: mainline
+    CLAIMS_REF: mainline
+    RECEIPTS_ALLOW_EMPTY: "1"
+  secrets-manager:
+    AGENTX_READ_TOKEN: qedly-site/agentx-readonly
+phases:
+  install:
+    runtime-versions: { nodejs: 22 }
+    commands: [npm ci]
+  build:
+    commands:
+      - npm test
+      - npm run build
+      - npm run lighthouse

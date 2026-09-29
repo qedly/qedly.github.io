@@ -13,7 +13,7 @@ import { findBanned } from "../src/lib/banned";
 import { SITE } from "../src/config/site";
 
 const token = process.env.AGENTX_READ_TOKEN;
-const ref = process.env.CLAIMS_REF ?? SITE.docsRelease;
+const ref = process.env.CLAIMS_REF || SITE.docsRelease;
 const headers: Record<string, string> = { Accept: "application/vnd.github+json", ...(token ? { Authorization: `Bearer ${token}` } : {}) };
 
 async function resolves(evidence: Evidence): Promise<string | null> {

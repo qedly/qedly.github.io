@@ -11,7 +11,7 @@ import { SITE } from "../src/config/site";
 import { keepQedlyCode, mergeWithCache, onlyChecked, toReceipt, type CheckRun, type PullRequest, type Receipt } from "../src/lib/receipts";
 
 const token = process.env.SITE_READ_TOKEN;
-const repo = process.env.RECEIPTS_REPO ?? SITE.siteRepo;
+const repo = process.env.RECEIPTS_REPO || SITE.siteRepo;
 const allowEmpty = process.env.RECEIPTS_ALLOW_EMPTY === "1";
 const target = "src/data/receipts.json";
 const headers: Record<string, string> = { Accept: "application/vnd.github+json", ...(token ? { Authorization: `Bearer ${token}` } : {}) };
