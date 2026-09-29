@@ -18,7 +18,10 @@ export default defineConfig({
       customCss: ["./src/styles/starlight.css"],
       social: [{ icon: "github", label: "GitHub", href: `https://github.com/${SITE.siteRepo}` }],
       head: SITE.launched ? [] : [{ tag: "meta", attrs: { name: "robots", content: "noindex,nofollow" } }],
-      sidebar: [{ label: "Docs", items: [{ label: "Overview", slug: "docs" }] }],
+      sidebar: [
+        { label: "Start", items: [{ label: "Overview", slug: "docs" }] },
+        { label: "QEDly Code", items: [{ autogenerate: { directory: "docs/agentx" } }] },
+      ],
     }),
   ],
 });

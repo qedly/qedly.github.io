@@ -9,7 +9,8 @@
     "test": "vitest run",
     "check": "astro check",
     "astro": "astro",
-    "check:claims": "tsx scripts/check-claims.ts"
+    "check:claims": "tsx scripts/check-claims.ts",
+    "sync:docs": "tsx scripts/sync-docs.ts"
   },
   "dependencies": {
     "@astrojs/starlight": "^0.42.4",
