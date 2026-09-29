@@ -1,0 +1,44 @@
+---
+/**
+ * A waitlist signup that posts straight to Buttondown in a new tab, as Buttondown asks, so a CAPTCHA or a typo
+ * can be handled there. This page then says what happens next. The site itself sets no cookies.
+ */
+import { SITE } from "../../config/site";
+import { waitlistAction, type WaitlistTag } from "../../lib/waitlist";
+interface Props { tag: WaitlistTag; product: string }
+const { tag, product } = Astro.props;
+const id = `waitlist-${tag}`;
+---
+<form class="q-waitlist" action={waitlistAction(SITE.buttondownUser)} method="post" target="_blank" data-waitlist>
+  <label for={id}>Email me when {product} opens</label>
+  <div class="row">
+    <input id={id} type="email" name="email" required autocomplete="email" placeholder="you@company.com" />
+    <input type="hidden" name="tag" value={tag} />
+    <button type="submit">Join the waitlist</button>
+  </div>
+  <p class="done" role="status" hidden>Check your inbox to confirm your place on the waitlist. Buttondown opened in a new tab in case it needs anything else from you.</p>
+</form>
+<script>
+  for (const form of document.querySelectorAll<HTMLFormElement>("form[data-waitlist]")) {
+    form.addEventListener("submit", () => {
+      // The browser posts the form to Buttondown's tab; this page only says what happens next.
+      setTimeout(() => {
+        form.querySelector(".row")?.setAttribute("hidden", "");
+        form.querySelector("label")?.setAttribute("hidden", "");
+        form.querySelector(".done")?.removeAttribute("hidden");
+      }, 0);
+    });
+  }
+</script>
+<style>
+  .q-waitlist { display: grid; gap: 10px; }
+  label { font-weight: 700; }
+  .row { display: flex; flex-wrap: wrap; gap: 10px; }
+  input[type="email"] { flex: 1 1 220px; min-height: 48px; box-sizing: border-box; padding: 0 14px; border: var(--q-border); font: inherit; font-size: 1.0625rem; background: var(--q-paper); color: var(--q-ink); }
+  input[type="email"]:focus-visible { outline: 3px solid var(--q-blue); outline-offset: 2px; }
+  button { min-height: 48px; padding: 0 20px; border: var(--q-border); background: var(--q-ink); color: var(--q-paper); font: inherit; font-weight: 700; cursor: pointer; }
+  button:hover { box-shadow: 4px 4px 0 var(--q-blue); }
+  button:focus-visible { outline: 3px solid var(--q-blue); outline-offset: 3px; }
+  .done { margin: 0; font-weight: 600; }
+  [hidden] { display: none !important; }
+</style>
