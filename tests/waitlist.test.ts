@@ -5,10 +5,10 @@ import WaitlistForm from "../src/components/site/WaitlistForm.astro";
 
 describe("waitlist", () => {
   it("posts to the list's Buttondown embed-subscribe address", () => {
-    expect(waitlistAction("qedly")).toBe("https://buttondown.com/qedly/embed-subscribe");
+    expect(waitlistAction("qedly")).toBe("https://buttondown.com/api/emails/embed-subscribe/qedly");
   });
   it("escapes an odd username rather than building a different address", () => {
-    expect(waitlistAction("a/b")).toBe("https://buttondown.com/a%2Fb/embed-subscribe");
+    expect(waitlistAction("a/b")).toBe("https://buttondown.com/api/emails/embed-subscribe/a%2Fb");
   });
   it("tags only the two products that take a waitlist", () => {
     expect(WAITLIST_TAGS).toEqual(["workspace", "cloud"]);
