@@ -1,0 +1,36 @@
+# Builds and publishes https://qedly.github.io (spec 042 FR-040).
+# Repository variables, until the first AgentX release tag exists:
+#   DOCS_REF, CLAIMS_REF   an AgentX branch, for example mainline
+#   RECEIPTS_ALLOW_EMPTY   "1" until the first QEDly Code pull request with CI runs is merged
+name: Deploy
+on:
+  push: { branches: [main] }
+  workflow_dispatch:
+permissions: { contents: read, pages: write, id-token: write, pull-requests: read, checks: read }
+concurrency: { group: pages, cancel-in-progress: false }
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - uses: actions/cache@v4
+        with: { path: src/data/receipts.json, key: "receipts-${{ github.run_id }}", restore-keys: receipts- }
+      - run: npm ci && npm test
+      - run: npm run build
+        env:
+          AGENTX_READ_TOKEN: "${{ secrets.AGENTX_READ_TOKEN }}"
+          SITE_READ_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          DOCS_REF: "${{ vars.DOCS_REF }}"
+          CLAIMS_REF: "${{ vars.CLAIMS_REF }}"
+          RECEIPTS_ALLOW_EMPTY: "${{ vars.RECEIPTS_ALLOW_EMPTY }}"
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: dist }
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: { name: github-pages, url: "${{ steps.deployment.outputs.page_url }}" }
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

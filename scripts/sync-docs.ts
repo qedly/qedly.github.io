@@ -10,7 +10,7 @@ import { SITE } from "../src/config/site";
 import { toStarlightPage } from "../src/lib/docs";
 
 const token = process.env.AGENTX_READ_TOKEN;
-const ref = process.env.DOCS_REF ?? SITE.docsRelease;
+const ref = process.env.DOCS_REF || SITE.docsRelease;
 const headers: Record<string, string> = { Accept: "application/vnd.github+json", ...(token ? { Authorization: `Bearer ${token}` } : {}) };
 const out = "src/content/docs/docs/agentx";
 
