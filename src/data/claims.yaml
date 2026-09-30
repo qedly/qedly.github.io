@@ -1,6 +1,6 @@
 # The claims ledger (spec 042 Appendix B). Every fact the site states about what QEDly Code does today
 # is here with its evidence, and pages render it with <Claim id="…" />. Evidence was checked against
-# PrepLabsAI/AgentX mainline on 2026-09-29. "next" and "later" claims appear only with a status label.
+# PrepLabsAI/AgentX mainline on 2026-09-29 and refreshed at c71eb30 (#160) on 2026-09-30. "next" and "later" claims appear only with a status label.
 
 - id: ask-in-slack
   text: Ask in Slack. No developer machine has to stay online.
@@ -27,6 +27,7 @@
   text: Idle machines stop after five minutes. The files and the conversation stay.
   status: now
   evidence:
+    - { kind: file, repo: PrepLabsAI/AgentX, path: packages/broker/src/aws/session-reaper.ts }
     - { kind: pr, repo: PrepLabsAI/AgentX, number: 95 }
     - { kind: pr, repo: PrepLabsAI/AgentX, number: 105 }
 
@@ -72,7 +73,7 @@
     - { kind: file, repo: PrepLabsAI/AgentX, path: README.md }
 
 - id: tickets-cant-approve
-  text: Text inside an issue can't approve an action, and destructive actions always ask first.
+  text: In Slack, text inside an issue can't approve an action, and destructive actions always ask first.
   status: now
   evidence:
     - { kind: pr, repo: PrepLabsAI/AgentX, number: 56 }
@@ -196,10 +197,25 @@
     - { kind: pr, repo: PrepLabsAI/AgentX, number: 139 }
 
 - id: destroy
-  text: Remove an installation with one command.
-  status: next
-  note: Planned as agentx destroy, phase 15e.
-  evidence: []
+  text: One command removes an installation. It asks you to type the environment's name first, and can keep your data.
+  status: now
+  evidence:
+    - { kind: pr, repo: PrepLabsAI/AgentX, number: 153 }
+    - { kind: file, repo: PrepLabsAI/AgentX, path: docs/teardown.md }
+
+- id: upgrade
+  text: Upgrading to a new release shows every change and asks before it applies.
+  status: now
+  evidence:
+    - { kind: pr, repo: PrepLabsAI/AgentX, number: 153 }
+    - { kind: file, repo: PrepLabsAI/AgentX, path: docs/day-two.md }
+
+- id: share-to-slack
+  text: A task started from an AI tool can be shared into the project's Slack channel, view only or open to the channel.
+  status: now
+  evidence:
+    - { kind: pr, repo: PrepLabsAI/AgentX, number: 159 }
+    - { kind: file, repo: PrepLabsAI/AgentX, path: README.md }
 
 - id: workspace-room
   text: One room per customer engagement, where your people and any agent, AWS's included, work with the working shown.
