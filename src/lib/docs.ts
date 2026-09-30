@@ -22,7 +22,7 @@ export function rewriteLink(href: string, fromPath: string, repo: string, tag: s
 }
 
 /** The reader's path through the docs; pages not listed follow, alphabetically. */
-const SIDEBAR_ORDER = ["quickstart", "concepts", "project-configuration", "security", "costs", "cli", "troubleshooting", "mcp-install", "openrouter", "architecture-production", "releases"];
+const SIDEBAR_ORDER = ["quickstart", "install", "concepts", "project-configuration", "security", "costs", "day-two", "cli", "troubleshooting", "mcp-install", "openrouter", "move-account", "teardown", "architecture-production", "releases"];
 
 /** Turn one AgentX docs file into a Starlight page: H1 into frontmatter, release stamp, links rewritten outside code blocks. */
 export function toStarlightPage(markdown: string, sourcePath: string, repo: string, tag: string): { slug: string; content: string } {

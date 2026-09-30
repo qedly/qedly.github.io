@@ -30,7 +30,7 @@ describe("toStarlightPage", () => {
   it("moves the H1 into frontmatter, stamps the release and rewrites links", () => {
     const page = toStarlightPage("# Project configuration\n\nSee [Linear](connectors/linear.md).\n", "docs/project-configuration.md", repo, tag);
     expect(page.slug).toBe("project-configuration");
-    expect(page.content).toBe('---\ntitle: "Project configuration"\ndescription: "AgentX v0.1.0 documentation"\nsidebar:\n  order: 3\n---\n\n> Documents AgentX v0.1.0.\n\nSee [Linear](/docs/agentx/connectors/linear/).\n');
+    expect(page.content).toBe('---\ntitle: "Project configuration"\ndescription: "AgentX v0.1.0 documentation"\nsidebar:\n  order: 4\n---\n\n> Documents AgentX v0.1.0.\n\nSee [Linear](/docs/agentx/connectors/linear/).\n');
   });
   it("quotes titles that contain a colon", () => {
     expect(toStarlightPage("# Setup: the short way\n\nx\n", "docs/a.md", repo, tag).content).toContain('title: "Setup: the short way"');
