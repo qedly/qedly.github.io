@@ -10,7 +10,7 @@ import { SITE } from "../config/site";
 <Marketing title="Receipts: QEDly Code's work on this website" description="Every merged pull request QEDly Code opened on this website, with the commit and the checks that ran on it. Counted from GitHub on every build." path="/receipts/">
   <PageIntro eyebrow="Receipts" tone="green">
     <Fragment slot="title">Homework, <MarkerBox>marked.</MarkerBox></Fragment>
-    <p>QEDly Code works on this website. Each receipt below is a merged pull request it opened on <a href={`https://github.com/${SITE.siteRepo}`}>{SITE.siteRepo}</a>, with the commit its checks ran on and a link to each check. The build reads them from GitHub. Nothing here is typed in by hand.</p>
+    <p>When QEDly Code changes this website, the change comes with a receipt. Each receipt below is a merged pull request it opened on <a href={`https://github.com/${SITE.siteRepo}`}>{SITE.siteRepo}</a>, with the commit its checks ran on and a link to each check. The build reads them from GitHub. Nothing here is typed in by hand.</p>
   </PageIntro>
   <section class="q-section q-stack">
     {RECEIPTS.length > 0 ? (

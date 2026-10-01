@@ -36,7 +36,7 @@ const faq = [
       <Eyebrow>QEDly Code · the agent that shows its work</Eyebrow>
       <h1 class="q-display q-h1"><span class="q-grey">Other agents say <Strike>done.</Strike></span><br />QEDly Code says <MarkerBox>QED.</MarkerBox></h1>
       <p class="q-lede">An AI coding agent that has to <Highlight>prove its work</Highlight>. Ask in Slack. It works in your own AWS account, runs your CI on the exact commit, and opens the pull request only when every check passes.</p>
-      <div class="actions"><Button href="/docs/agentx/quickstart/">Deploy QEDly Code</Button><Button href="#receipts" variant="outline">See the receipts</Button></div>
+      <div class="actions"><Button href="/code/#early-access">Get early access</Button><Button href="#how" variant="outline">How it works</Button></div>
       <p class="q-mono small">Source-available · Runs in your AWS account · Amazon Bedrock</p>
     </div>
     <div class="q-note-pin hero-proof">
@@ -139,15 +139,15 @@ const faq = [
     <div class="receipts-head">
       <div class="q-stack">
         <Eyebrow tone="green">Marked and returned</Eyebrow>
-        <h2 class="q-display q-h2">QEDly Code works on this website.</h2>
-        <p class="q-body">Every change it makes here comes with a receipt: the pull request, the commit, and the checks that ran on it.</p>
+        <h2 class="q-display q-h2">Receipts, not reports.</h2>
+        <p class="q-body">When QEDly Code changes this website, the change comes with a receipt: the pull request, the commit, and the checks that ran on it.</p>
       </div>
       {RECEIPTS.length > 0 && <ReceiptTotals receipts={RECEIPTS} />}
     </div>
     {latest.length > 0 ? (
       <div class="q-grid-3">{latest.map((receipt, index) => <ReceiptCard receipt={receipt} tilt={[-1.5, 1, -1][index]} />)}</div>
     ) : (
-      <p class="q-card empty">The first receipts land here as QEDly Code's pull requests to this site are merged. Nothing on this page is typed in by hand.</p>
+      <p class="q-card empty">No receipts yet. The first ones appear here when QEDly Code's first pull requests to this site are merged. Nothing here is typed in by hand.</p>
     )}
     <p><a href="/receipts/">Every receipt links to the pull request and the check that proved it</a></p>
   </section>
