@@ -40,8 +40,8 @@ const nav = [
 <body class="q-paper-grid">
   <a class="q-skip" href="#main">Skip to content</a>
   <div class="q-banner">
-    <span>QEDly Code works on this site. Every change it makes comes with a receipt.</span>
-    <a href="/receipts/">See the receipts</a>
+    <span>QEDly Code is in early access. The first public release is on its way.</span>
+    <a href="/code/#early-access">Get early access</a>
   </div>
   <header class="q-header">
     <div class="q-header-left">
@@ -51,8 +51,8 @@ const nav = [
       </nav>
     </div>
     <div class="q-header-right">
-      <a class="q-github" href={`https://github.com/${SITE.agentxRepo}`}>GitHub</a>
-      <Button href="/docs/agentx/quickstart/">Deploy QEDly Code</Button>
+      {SITE.launched && <a class="q-github" href={`https://github.com/${SITE.agentxRepo}`}>GitHub</a>}
+      <Button href="/code/#early-access">Get early access</Button>
     </div>
   </header>
   <main id="main"><slot /></main>

@@ -10,6 +10,7 @@ import SlackThread from "../components/site/SlackThread.astro";
 import PullRequestCard from "../components/site/PullRequestCard.astro";
 import { SITE } from "../config/site";
 import { softwareApplicationLd } from "../lib/seo";
+import WaitlistForm from "../components/site/WaitlistForm.astro";
 
 const steps = [
   { title: "Install it in your AWS account", body: "One command walks you through it: the stacks, its own GitHub App and Slack app, sign-in, and your first project.", claim: "one-command-setup" },
@@ -22,7 +23,7 @@ const steps = [
   <PageIntro eyebrow="QEDly Code · Now">
     <Fragment slot="title">The coding agent that <MarkerBox>shows its work.</MarkerBox></Fragment>
     <p>Ask in Slack. QEDly Code works on its own machine in your AWS account, then runs your checks on the exact commit it pushed. <Claim id="no-force-no-merge" /></p>
-    <div class="actions"><Button href="/docs/agentx/quickstart/">Deploy QEDly Code</Button><Button href="/docs/agentx/concepts/" variant="outline">How it works</Button></div>
+    <div class="actions"><Button href="#early-access">Get early access</Button><Button href="/docs/agentx/concepts/" variant="outline">How it works</Button></div>
   </PageIntro>
 
   <section class="q-section q-section-white q-split" id="how">
@@ -56,6 +57,15 @@ const steps = [
     </ol>
     <p class="q-mono cmd"><span class="q-pen-blue">$</span> {SITE.installCommand}</p>
     <p class="q-body">The first public release is on its way. Until then, the <a href="/docs/agentx/quickstart/">quickstart</a> installs from a source checkout.</p>
+  </section>
+
+  <section class="q-section q-split" id="early-access">
+    <div class="q-stack">
+      <Eyebrow tone="blue">Early access</Eyebrow>
+      <h2 class="q-display q-h2">Try it before the public release.</h2>
+      <p class="q-body">We are setting up a small number of teams on AWS first. Leave your email and we will get in touch to install it with you.</p>
+    </div>
+    <div class="q-card"><WaitlistForm tag="code" product="QEDly Code" label="Get early access to QEDly Code" button="Get early access" done="Thanks. We'll be in touch." /></div>
   </section>
 
   <section class="q-section q-section-yellow q-split">

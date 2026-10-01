@@ -10,8 +10,8 @@ describe("waitlist", () => {
   it("escapes an odd username rather than building a different address", () => {
     expect(waitlistAction("a/b")).toBe("https://buttondown.com/api/emails/embed-subscribe/a%2Fb");
   });
-  it("lists the two product waitlists and the design-partner list", () => {
-    expect(WAITLIST_TAGS).toEqual(["workspace", "cloud", "partners"]);
+  it("lists the product waitlists, the design-partner list and early access to QEDly Code", () => {
+    expect(WAITLIST_TAGS).toEqual(["workspace", "cloud", "partners", "code"]);
   });
 });
 
